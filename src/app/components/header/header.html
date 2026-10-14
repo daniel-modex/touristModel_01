@@ -1,0 +1,20 @@
+<header class="nav" [class.scrolled]="scrolled()">
+  <a class="brand" href="#top">KERALATRAVI</a>
+
+  <nav class="links" [class.open]="menuOpen()">
+    @for (l of links; track l) {
+      <a href="#" (click)="menuOpen.set(false)">{{ l }}</a>
+    }
+  </nav>
+
+  <div class="right">
+    <div class="lang" role="group" aria-label="Language">
+      <button [class.on]="lang() === 'ON'" (click)="setLang('ON')">ML</button>
+      <button [class.on]="lang() === 'EN'" (click)="setLang('EN')">En</button>
+    </div>
+    <a class="login" href="#">Login</a>
+    <button class="burger" aria-label="Menu" (click)="menuOpen.set(!menuOpen())">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>

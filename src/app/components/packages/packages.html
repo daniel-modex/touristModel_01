@@ -1,0 +1,32 @@
+<section class="container sec" id="packages">
+  <div class="head">
+    <div appReveal>
+      <span class="eyebrow">Tour packages</span>
+      <h2 class="section-title">Our tourist destination</h2>
+    </div>
+    <p class="section-lead" [appReveal]="150">
+      Our tourist destinations offer an unrivaled blend of natural beauty and cultural richness.
+    </p>
+  </div>
+
+  <div class="grid">
+    @for (p of items; track p.title; let i = $index) {
+      <article class="pkg" [appReveal]="i * 140">
+        <img [src]="p.image" [alt]="p.title" loading="lazy" />
+        <div class="top">
+          <span class="chip">{{ p.days }}</span>
+          <span class="chip"><i>★</i> {{ p.rating.toFixed(1) }}</span>
+        </div>
+        <div class="bottom">
+          <small>{{ p.dates }}</small>
+          <div class="row">
+            <strong>{{ p.title }}</strong>
+            <b>${{ p.price }}</b>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div class="more" appReveal><a class="btn-dark" href="#">View more</a></div>
+</section>

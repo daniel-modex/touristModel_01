@@ -1,0 +1,133 @@
+:host {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: block;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 32px;
+  color: #fff;
+  animation: nav-in 1s var(--ease) 0.2s both;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.links {
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.12);
+  backdrop-filter: blur(10px);
+
+  a {
+    padding: 7px 16px;
+    font-size: 11px;
+    border-radius: 999px;
+    color: rgb(255 255 255 / 0.75);
+    transition: background 0.3s, color 0.3s;
+
+    &:hover,
+    &:first-child {
+      color: #fff;
+      background: rgb(255 255 255 / 0.14);
+    }
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang {
+  display: flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.15);
+
+  button {
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 10px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    transition: background 0.3s, color 0.3s;
+
+    &.on {
+      background: #fff;
+      color: var(--ink);
+    }
+  }
+}
+
+.login {
+  background: #fff;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 999px;
+  transition: transform 0.3s var(--ease);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: 0;
+  padding: 6px;
+
+  span {
+    width: 20px;
+    height: 2px;
+    background: #fff;
+  }
+}
+
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+@media (max-width: 820px) {
+  .nav {
+    padding: 18px 20px;
+  }
+
+  .links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 20px;
+    right: 20px;
+    flex-direction: column;
+    border-radius: 18px;
+    background: rgb(20 19 19 / 0.85);
+
+    &.open {
+      display: flex;
+    }
+  }
+
+  .burger {
+    display: flex;
+  }
+}

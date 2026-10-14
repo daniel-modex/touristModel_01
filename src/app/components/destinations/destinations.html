@@ -1,0 +1,23 @@
+<section class="container sec" id="destinations">
+  <div class="head">
+    <div appReveal>
+      <span class="eyebrow">Best location</span>
+      <h2 class="section-title">Kerala tourism</h2>
+    </div>
+    <p class="section-lead" [appReveal]="150">
+      Extraordinary natural beauty, enjoy the rich culture, and experience the friendliness of the local people.
+    </p>
+  </div>
+
+  <div class="grid">
+    @for (d of items; track d.title; let i = $index) {
+      <a href="#" class="card" [class.wide]="d.size === 'wide'" [appReveal]="i * 130">
+        <img [src]="d.image" [alt]="d.title" loading="lazy" />
+        <div class="cap">
+          <small>{{ d.location }}</small>
+          <strong>{{ d.title }}</strong>
+        </div>
+      </a>
+    }
+  </div>
+</section>

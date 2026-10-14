@@ -1,0 +1,22 @@
+<section class="container t" appReveal>
+  <div class="who">
+    <div class="who-top">
+      <span class="avatar">{{ initials() }}</span>
+      <span>
+        <strong>{{ current().name }}</strong>
+        <small>{{ current().role }}</small>
+      </span>
+    </div>
+    <div class="arrows">
+      <button type="button" aria-label="Previous" (click)="step(-1)">←</button>
+      <button type="button" aria-label="Next" (click)="step(1)">→</button>
+    </div>
+  </div>
+
+  <blockquote>
+    <span class="quote" aria-hidden="true">”</span>
+    @for (t of [current()]; track t.name) {
+      <p class="text">{{ t.quote }}</p>
+    }
+  </blockquote>
+</section>

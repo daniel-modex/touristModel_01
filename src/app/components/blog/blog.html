@@ -1,0 +1,21 @@
+<section class="container sec" id="blog">
+  <div class="head" appReveal>
+    <span class="eyebrow">Our Blog</span>
+    <h2 class="section-title">Our travel memories</h2>
+  </div>
+
+  <div class="grid">
+    @for (p of posts; track p.title; let i = $index) {
+      <a href="#" class="post" [appReveal]="i * 140">
+        <div class="img"><img [src]="p.image" [alt]="p.title" loading="lazy" /></div>
+        <div class="body">
+          <small>{{ p.date }}</small>
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.excerpt }}</p>
+        </div>
+      </a>
+    }
+  </div>
+
+  <div class="more" appReveal><a class="btn-dark" href="#">View more</a></div>
+</section>
