@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { STATS } from '../../data/content';
 import { CountUpDirective } from '../../directives/count-up.directive';
@@ -11,7 +11,8 @@ import { Header } from '../header/header';
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
-export class Hero implements OnInit {
+export class Hero implements OnInit, AfterViewInit {
+  private readonly video = viewChild.required<ElementRef<HTMLVideoElement>>('heroVideo');
   protected readonly stats = STATS;
   protected readonly videoReady = signal(false);
   protected readonly textReady = signal(false);
@@ -28,6 +29,14 @@ export class Hero implements OnInit {
         this.textReady.set(true);
       }
     }, 5000);
+  }
+
+  ngAfterViewInit(): void {
+    // Angular does not reflect the static `muted` attribute onto the element's
+    // `muted` property, so browsers treat the video as unmuted and block autoplay.
+    const video = this.video().nativeElement;
+    video.muted = true;
+    video.play().catch(() => this.textReady.set(true));
   }
 
   protected onTimeUpdate(video: HTMLVideoElement): void {
