@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, effect, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { STATS } from '../../data/content';
+import { BUDGETS, GUEST_OPTIONS, STATS } from '../../data/content';
 import { CountUpDirective } from '../../directives/count-up.directive';
 import { RevealDirective } from '../../directives/reveal.directive';
 import { Motion } from '../../motion/motion.service';
@@ -31,8 +31,8 @@ export class Hero implements AfterViewInit, OnDestroy {
   protected date = '';
   protected budget = '';
   protected guests = '';
-  protected readonly budgets = ['Under ₹20,000', '₹20,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000+'];
-  protected readonly guestOptions = ['1 Guest', '2 Guests', '3 – 5 Guests', '6+ Guests'];
+  protected readonly budgets = BUDGETS;
+  protected readonly guestOptions = GUEST_OPTIONS;
 
   constructor() {
     // The loader lifts -> the picture settles. (Header and stats are staged by their own delays;

@@ -1,16 +1,24 @@
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
-import { STEPS } from '../../data/content';
+import { FormsModule } from '@angular/forms';
+import { BUDGETS, GUEST_OPTIONS, STEPS } from '../../data/content';
+import { Motion } from '../../motion/motion.service';
 import { RevealDirective } from '../../directives/reveal.directive';
 import { SplitDirective } from '../../directives/split.directive';
 
 @Component({
   selector: 'app-how-it-works',
-  imports: [RevealDirective, SplitDirective],
+  imports: [FormsModule, RevealDirective, SplitDirective],
   templateUrl: './how-it-works.html',
   styleUrl: './how-it-works.scss',
 })
 export class HowItWorks implements OnInit {
+  private readonly motion = inject(Motion);
   protected readonly steps = STEPS;
+  protected date = '';
+  protected budget = '';
+  protected guests = '';
+  protected readonly budgets = BUDGETS;
+  protected readonly guestOptions = GUEST_OPTIONS;
   protected readonly active = signal(0);
   private readonly destroyRef = inject(DestroyRef);
   private timer?: ReturnType<typeof setInterval>;
@@ -33,6 +41,10 @@ export class HowItWorks implements OnInit {
     this.timer = setInterval(() => {
       if (!this.paused) this.active.update((i) => (i + 1) % this.steps.length);
     }, 3600);
+  }
+
+  protected search(): void {
+    this.motion.scrollTo('destinations');
   }
 
   protected pause(): void {

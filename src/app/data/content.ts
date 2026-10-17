@@ -174,3 +174,7 @@ export const FOOTER_COLUMNS = [
   { title: 'Support', links: ['Contact Us', 'Online Chat', 'Whatsapp', 'Telegram', 'Ticketing', 'Call Center'] },
   { title: 'FAQ', links: ['Account', 'Booking', 'Payments', 'Return', 'Privacy Policy', 'Terms & Condition'] },
 ];
+
+/** trip search options, shared by the hero search and the How it works search */
+export const BUDGETS = ['Under ₹20,000', '₹20,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000+'];
+export const GUEST_OPTIONS = ['1 Guest', '2 Guests', '3 – 5 Guests', '6+ Guests'];
