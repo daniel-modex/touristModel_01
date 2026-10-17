@@ -21,7 +21,7 @@
           <small>{{ p.dates }}</small>
           <div class="row">
             <strong>{{ p.title }}</strong>
-            <b>${{ p.price }}</b>
+            <b [attr.aria-label]="p.price.toLocaleString('en-IN') + ' rupees'">₹{{ p.price.toLocaleString('en-IN') }}</b>
           </div>
         </div>
       </article>

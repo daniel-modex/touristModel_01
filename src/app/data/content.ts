@@ -10,6 +10,7 @@ export interface TourPackage {
   rating: number;
   dates: string;
   title: string;
+  /** price in Indian rupees (INR) */
   price: number;
   image: string;
 }
@@ -85,9 +86,9 @@ export const STEPS: Step[] = [
 ];
 
 export const PACKAGES: TourPackage[] = [
-  { days: '7 Days', rating: 4.9, dates: '22 AUGUST - 29 AUGUST', title: 'Munnar Tour Package', price: 285, image: 'images/pkg-munnar.jpg' },
-  { days: '5 Days', rating: 4.8, dates: '22 AUGUST - 27 AUGUST', title: 'Athirappilly Tour Package', price: 218, image: 'images/pkg-athirappilly.jpg' },
-  { days: '3 Days', rating: 4.8, dates: '23 AUGUST - 25 AUGUST', title: 'Alleppey Tour Package', price: 163, image: 'images/pkg-backwaters.jpg' },
+  { days: '7 Days', rating: 4.9, dates: '22 AUGUST - 29 AUGUST', title: 'Munnar Tour Package', price: 23999, image: 'images/pkg-munnar.jpg' },
+  { days: '5 Days', rating: 4.8, dates: '22 AUGUST - 27 AUGUST', title: 'Athirappilly Tour Package', price: 17999, image: 'images/pkg-athirappilly.jpg' },
+  { days: '3 Days', rating: 4.8, dates: '23 AUGUST - 25 AUGUST', title: 'Alleppey Tour Package', price: 13499, image: 'images/pkg-backwaters.jpg' },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [

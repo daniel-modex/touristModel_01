@@ -45,4 +45,3 @@ After: **Good**. All Critical items are fixed. The design's thesis is "drone-ove
 
 - Munnar package photo is foggy and low-contrast against its caption. Swap the image.
 - Destination captions on small cards overlay busy photos; the scrim was strengthened but a per-image check is worth doing.
-- Prices are in USD while the site is about Kerala; confirm the intended currency.
