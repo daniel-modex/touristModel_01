@@ -13,7 +13,8 @@
       (loadeddata)="videoReady.set(true)"
       (playing)="videoReady.set(true)"
       (timeupdate)="onTimeUpdate(heroVideo)"
-      (ended)="textReady.set(true)"
+      (ended)="onEnded()"
+      (canplay)="tryPlay()"
     >
     </video>
     <div class="shade"></div>
