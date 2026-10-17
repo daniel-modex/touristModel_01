@@ -62,6 +62,8 @@
 
 .copy {
   position: relative;
+  /* above the stats row, so an open drop-down is never covered by it */
+  z-index: 3;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -150,13 +152,10 @@
 
   app-select {
     flex: none;
-    width: 112px;
+    /* starts at the base size, then eases to fit the chosen label (--fit is set by <app-select>) */
+    width: max(112px, var(--fit, 0px));
+    transition: width 0.4s var(--ease);
     font-size: 0.875rem;
-
-    /* the longest budget label should show in full once chosen */
-    &.wide {
-      width: 156px;
-    }
     text-shadow: 0 1px 8px rgb(0 0 0 / 0.4);
   }
 
@@ -283,8 +282,7 @@
 
     .field input,
     .field select,
-    .field app-select,
-    .field app-select.wide {
+    .field app-select {
       flex: 1;
       width: auto;
     }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, computed, forwardRef, inject, input, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, afterNextRender, computed, forwardRef, inject, input, signal, viewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 let nextId = 0;
@@ -17,10 +17,12 @@ let nextId = 0;
   selector: 'app-select',
   templateUrl: './select.html',
   styleUrl: './select.scss',
+  host: { '[style.--fit.px]': 'fit()' },
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => Select), multi: true }],
 })
 export class Select implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly options = input.required<readonly string[]>();
   readonly placeholder = input('Select');
@@ -32,8 +34,24 @@ export class Select implements ControlValueAccessor {
   protected readonly cursor = signal(0);
   protected readonly up = signal(false);
   protected readonly end = signal(false);
+  /** width the closed control needs for its current text (text + gap + chevron), for hosts that size to the choice */
+  protected readonly fit = signal(0);
+  private readonly ruler = viewChild<ElementRef<HTMLElement>>('ruler');
   protected readonly shown = computed(() => this.value() || this.placeholder());
   private typed = '';
+
+  constructor() {
+    // measure once the first render is in, and again when fonts have loaded
+    afterNextRender(() => {
+      this.measure();
+      document.fonts?.ready.then(() => this.measure());
+    });
+  }
+
+  private measure(): void {
+    const w = this.ruler()?.nativeElement.offsetWidth;
+    if (w) this.fit.set(Math.ceil(w) + 20);
+  }
   private typedTimer?: ReturnType<typeof setTimeout>;
 
   private onChange: (v: string) => void = () => undefined;
@@ -41,6 +59,7 @@ export class Select implements ControlValueAccessor {
 
   writeValue(v: string | null): void {
     this.value.set(v ?? '');
+    queueMicrotask(() => this.measure());
   }
   registerOnChange(fn: (v: string) => void): void {
     this.onChange = fn;
@@ -71,6 +90,8 @@ export class Select implements ControlValueAccessor {
     const v = this.options()[i];
     this.value.set(v);
     this.onChange(v);
+    this.cdr.detectChanges();
+    this.measure();
     this.close();
     this.host.querySelector('button')?.focus({ preventScroll: true });
   }

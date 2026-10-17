@@ -5,6 +5,13 @@
   min-width: 0;
 }
 
+.ruler {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 .trigger {
   display: flex;
   align-items: center;
@@ -67,7 +74,9 @@
   z-index: 20;
   top: calc(100% + 12px);
   left: -8px;
-  min-width: 212px;
+  /* sized by its widest label, never narrower than the control */
+  width: max-content;
+  min-width: max(212px, 100%);
   margin: 0;
   padding: 6px;
   list-style: none;
