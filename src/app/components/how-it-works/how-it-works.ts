@@ -30,7 +30,7 @@ export class HowItWorks implements AfterViewInit, OnDestroy {
   private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /** one second between highlights */
-  private static readonly STEP_MS = 1000;
+  private static readonly STEP_MS = 2000;
 
   ngAfterViewInit(): void {
     if (this.reduceMotion || typeof IntersectionObserver === 'undefined') return;
