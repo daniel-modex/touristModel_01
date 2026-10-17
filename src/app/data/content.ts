@@ -33,7 +33,19 @@ export interface Testimonial {
   quote: string;
 }
 
-export const NAV_LINKS = ['About', 'Services', 'Tour', 'Blog', 'Contact'];
+export interface NavLink {
+  label: string;
+  /** id of the section the link scrolls to */
+  id: string;
+}
+
+export const NAV_LINKS: NavLink[] = [
+  { label: 'Destinations', id: 'destinations' },
+  { label: 'How It Works', id: 'how' },
+  { label: 'Tours', id: 'packages' },
+  { label: 'Stories', id: 'blog' },
+  { label: 'Contact', id: 'contact' },
+];
 
 export const STATS = [
   { value: 10, suffix: 'M+', label: 'Total Customers' },

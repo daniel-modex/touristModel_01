@@ -8,12 +8,13 @@
       </span>
     </div>
     <div class="arrows">
-      <button type="button" aria-label="Previous" (click)="step(-1)">←</button>
-      <button type="button" aria-label="Next" (click)="step(1)">→</button>
+      <button type="button" aria-label="Previous review" (click)="step(-1)"><span aria-hidden="true">←</span></button>
+      <span aria-hidden="true">{{ index() + 1 }} / {{ total }}</span>
+      <button type="button" aria-label="Next review" (click)="step(1)"><span aria-hidden="true">→</span></button>
     </div>
   </div>
 
-  <blockquote>
+  <blockquote aria-live="polite">
     <span class="quote" aria-hidden="true">”</span>
     @for (t of [current()]; track t.name) {
       <p class="text">{{ t.quote }}</p>

@@ -3,11 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { STATS } from '../../data/content';
 import { CountUpDirective } from '../../directives/count-up.directive';
 import { RevealDirective } from '../../directives/reveal.directive';
-import { Header } from '../header/header';
 
 @Component({
   selector: 'app-hero',
-  imports: [FormsModule, Header, CountUpDirective, RevealDirective],
+  imports: [FormsModule, CountUpDirective, RevealDirective],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
@@ -47,6 +46,11 @@ export class Hero implements OnInit, AfterViewInit {
   protected tryPlay(): void {
     const video = this.video().nativeElement;
     if (this.finished || !video.paused) return;
+    // Reduce Motion: keep the first frame as a still instead of autoplaying.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.textReady.set(true);
+      return;
+    }
     // Angular does not reflect the static `muted` attribute onto the element's
     // `muted` property, so browsers treat the video as unmuted and block autoplay.
     video.muted = true;

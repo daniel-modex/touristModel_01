@@ -12,10 +12,10 @@
   <div class="grid">
     @for (p of items; track p.title; let i = $index) {
       <article class="pkg" [appReveal]="i * 140">
-        <img [src]="p.image" [alt]="p.title" loading="lazy" />
+        <img [src]="p.image" [alt]="p.title + ' tour package'" loading="lazy" />
         <div class="top">
           <span class="chip">{{ p.days }}</span>
-          <span class="chip"><i>★</i> {{ p.rating.toFixed(1) }}</span>
+          <span class="chip" [attr.aria-label]="'Rated ' + p.rating.toFixed(1) + ' out of 5'"><i aria-hidden="true">★</i> {{ p.rating.toFixed(1) }}</span>
         </div>
         <div class="bottom">
           <small>{{ p.dates }}</small>
@@ -28,5 +28,5 @@
     }
   </div>
 
-  <div class="more" appReveal><a class="btn-dark" href="#">View more</a></div>
+  <div class="more" appReveal><a class="btn-dark" href="#packages">View All Packages</a></div>
 </section>

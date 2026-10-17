@@ -6,8 +6,8 @@
 
   <div class="grid">
     @for (p of posts; track p.title; let i = $index) {
-      <a href="#" class="post" [appReveal]="i * 140">
-        <div class="img"><img [src]="p.image" [alt]="p.title" loading="lazy" /></div>
+      <a href="#blog" class="post" [appReveal]="i * 140">
+        <div class="img"><img [src]="p.image" alt="" loading="lazy" /></div>
         <div class="body">
           <small>{{ p.date }}</small>
           <h3>{{ p.title }}</h3>
@@ -17,5 +17,5 @@
     }
   </div>
 
-  <div class="more" appReveal><a class="btn-dark" href="#">View more</a></div>
+  <div class="more" appReveal><a class="btn-dark" href="#blog">Read More Stories</a></div>
 </section>

@@ -12,7 +12,7 @@
   border-radius: 16px;
   overflow: hidden;
   color: #fff;
-  box-shadow: 0 30px 60px rgb(20 19 19 / 0.18);
+  box-shadow: 0 30px 60px rgb(var(--shadow) / 0.2);
 
   img {
     width: 100%;
@@ -27,27 +27,29 @@
     background: linear-gradient(180deg, transparent 50%, rgb(0 0 0 / 0.75));
   }
 
-  .mini {
+  .cta {
     position: absolute;
-    left: 14px;
-    right: 14px;
-    bottom: 64px;
+    left: 16px;
+    right: 16px;
+    bottom: 76px;
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 6px 6px 6px 14px;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0 22px;
     border-radius: 999px;
-    font-size: 8px;
-    background: rgb(255 255 255 / 0.15);
-    backdrop-filter: blur(10px);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    transition: transform 0.5s var(--spring);
 
-    b {
-      margin-left: auto;
-      background: #fff;
-      color: var(--ink);
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-weight: 600;
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: scale(0.97);
+      transition-duration: 0.12s;
     }
   }
 
@@ -56,7 +58,8 @@
     left: 16px;
     right: 16px;
     bottom: 16px;
-    font-size: 8.5px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
     line-height: 1.6;
   }
 }
@@ -78,12 +81,12 @@
   gap: 16px;
   align-items: flex-start;
   text-align: left;
-  padding: 18px 20px;
+  padding: 20px 22px;
+  min-height: 44px;
   border: 0;
-  border-radius: 12px;
+  border-radius: 16px;
   background: transparent;
   color: var(--ink);
-  transition: background 0.5s var(--ease), box-shadow 0.5s var(--ease);
 
   .ico svg {
     width: 16px;
@@ -103,37 +106,58 @@
   }
 
   strong {
-    font-size: 12.5px;
+    font-size: 1rem;
+    letter-spacing: -0.005em;
     font-weight: 600;
   }
 
   small {
-    font-size: 9.5px;
-    line-height: 1.6;
+    font-size: 0.875rem;
+    line-height: 1.55;
     color: var(--muted);
   }
 
   /* inactive steps are faded; the active one lifts onto a white card */
-  .ico,
-  .txt {
-    opacity: 0.45;
-    transition: opacity 0.5s;
+  /* inactive steps recede by size/weight and a lighter tone, but keep >= 4.5:1 text contrast */
+  .txt strong {
+    color: var(--muted);
+    transition: color 0.4s var(--ease);
+  }
+
+  .ico {
+    opacity: 0.7;
+    transition: opacity 0.4s;
   }
 
   &.active {
-    background: #fff;
-    box-shadow: 0 12px 30px rgb(20 19 19 / 0.07);
+    background: var(--card);
+    box-shadow: 0 12px 30px rgb(var(--shadow) / 0.08);
 
-    .ico,
-    .txt {
+    .ico {
       opacity: 1;
+    }
+
+    .txt strong {
+      color: var(--ink);
     }
   }
 
-  &:hover .ico,
-  &:hover .txt {
+  &:hover .ico {
     opacity: 1;
   }
+
+  &:hover .txt strong {
+    color: var(--ink);
+  }
+
+  &:active {
+    transform: scale(0.985);
+  }
+
+  transition:
+    background 0.5s var(--ease),
+    box-shadow 0.5s var(--ease),
+    transform 0.4s var(--spring);
 }
 
 @media (max-width: 820px) {

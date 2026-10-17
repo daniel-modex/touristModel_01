@@ -14,15 +14,32 @@ export class HowItWorks implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private timer?: ReturnType<typeof setInterval>;
 
+  private paused = false;
+  private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   ngOnInit(): void {
     this.startCycle();
     this.destroyRef.onDestroy(() => clearInterval(this.timer));
   }
 
-  /** Steps highlight one after another, like the reference recording. */
+  /**
+   * Steps highlight one after another, like the reference recording. The cycle
+   * pauses while the section is hovered or focused, and never runs under Reduce Motion.
+   */
   private startCycle(): void {
     clearInterval(this.timer);
-    this.timer = setInterval(() => this.active.update((i) => (i + 1) % this.steps.length), 3200);
+    if (this.reduceMotion) return;
+    this.timer = setInterval(() => {
+      if (!this.paused) this.active.update((i) => (i + 1) % this.steps.length);
+    }, 3600);
+  }
+
+  protected pause(): void {
+    this.paused = true;
+  }
+
+  protected resume(): void {
+    this.paused = false;
   }
 
   protected select(i: number): void {

@@ -1,19 +1,27 @@
-<header class="nav" [class.scrolled]="scrolled()">
-  <a class="brand" href="#top">KERALATRAVI</a>
+<header class="bar" [class.over-content]="overContent()">
+  <a class="brand" href="#top" (click)="go('top', $event)" aria-label="Keralatravi home">KERALATRAVI</a>
 
-  <nav class="links" [class.open]="menuOpen()">
-    @for (l of links; track l) {
-      <a href="#" (click)="menuOpen.set(false)">{{ l }}</a>
+  <nav id="site-nav" class="links glass" [class.glass--clear]="!overContent()" [class.open]="menuOpen()" aria-label="Primary">
+    @for (l of links; track l.id) {
+      <a [href]="'#' + l.id" [attr.aria-current]="active() === l.id ? 'true' : null" (click)="go(l.id, $event)">{{ l.label }}</a>
     }
   </nav>
 
   <div class="right">
-    <div class="lang" role="group" aria-label="Language">
-      <button [class.on]="lang() === 'ON'" (click)="setLang('ON')">ML</button>
-      <button [class.on]="lang() === 'EN'" (click)="setLang('EN')">En</button>
+    <div class="lang glass" [class.glass--clear]="!overContent()" role="group" aria-label="Language">
+      <button type="button" [attr.aria-pressed]="lang() === 'ML'" (click)="setLang('ML')" lang="ml">മല</button>
+      <button type="button" [attr.aria-pressed]="lang() === 'EN'" (click)="setLang('EN')">EN</button>
     </div>
-    <a class="login" href="#">Login</a>
-    <button class="burger" aria-label="Menu" (click)="menuOpen.set(!menuOpen())">
+    <a class="login" href="#" (click)="$event.preventDefault()">Log In</a>
+    <button
+      type="button"
+      class="burger glass"
+      [class.glass--clear]="!overContent()"
+      aria-label="Menu"
+      aria-controls="site-nav"
+      [attr.aria-expanded]="menuOpen()"
+      (click)="menuOpen.set(!menuOpen())"
+    >
       <span></span><span></span>
     </button>
   </div>

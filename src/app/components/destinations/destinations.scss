@@ -49,7 +49,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 45%, rgb(0 0 0 / 0.65));
+    background: linear-gradient(180deg, transparent 40%, rgb(0 0 0 / 0.72));
     transition: opacity 0.4s;
   }
 
@@ -65,20 +65,22 @@
 .cap {
   position: absolute;
   z-index: 1;
-  left: 16px;
-  bottom: 14px;
+  left: 18px;
+  bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 3px;
   transition: transform 0.5s var(--ease);
 
   small {
-    font-size: 10px;
-    opacity: 0.8;
+    font-size: 0.8125rem;
+    letter-spacing: 0.01em;
+    opacity: 0.92;
   }
 
   strong {
-    font-size: 13px;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
     font-weight: 600;
   }
 }
