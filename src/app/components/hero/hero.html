@@ -7,15 +7,13 @@
       src="video/Video%20Project.mp4"
       autoplay
       muted
-      loop
       playsinline
       preload="auto"
       (loadeddata)="videoReady.set(true)"
       (playing)="videoReady.set(true)"
       (timeupdate)="onTimeUpdate(heroVideo)"
+      (ended)="textReady.set(true)"
     >
-      <source src="video/Video%20Project.mp4" type="video/mp4" />
-      <source src="video/Video Project.mp4" type="video/mp4" />
     </video>
     <div class="shade"></div>
   </div>
