@@ -1,4 +1,4 @@
-# Design review: Keralatravi
+# Design review: Greenmiles
 
 Reviewed with the `apple-design`, `apple-design-motion` and `liquid-glass-ref` skills (installed in `.claude/skills/`).
 Scope: a web app, so the Apple principles and foundations apply (accessibility, color, typography, layout, writing, materials, motion), not Apple's platform-specific components.

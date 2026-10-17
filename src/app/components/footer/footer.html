@@ -1,4 +1,9 @@
 <footer class="foot" id="contact">
+  <div class="container brand-row" appReveal>
+    <app-logo [height]="48" />
+    <p>Kerala journeys, planned the green way.</p>
+  </div>
+
   <div class="container cols" appReveal>
     @for (c of columns; track c.title) {
       <div class="col">
@@ -25,5 +30,5 @@
     </div>
   </div>
 
-  <p class="copy">©{{ year }} Keralatravi, All Rights Reserved · <a href="credits.html">Photo credits</a></p>
+  <p class="copy">©{{ year }} Greenmiles, All Rights Reserved · <a href="credits.html">Photo credits</a></p>
 </footer>

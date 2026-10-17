@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FOOTER_COLUMNS } from '../../data/content';
 import { RevealDirective } from '../../directives/reveal.directive';
+import { Logo } from '../logo/logo';
 
 @Component({
   selector: 'app-footer',
-  imports: [FormsModule, RevealDirective],
+  imports: [FormsModule, RevealDirective, Logo],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
 })

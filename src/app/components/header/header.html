@@ -1,5 +1,8 @@
 <header class="bar" [class.over-content]="overContent()">
-  <a class="brand" href="#top" (click)="go('top', $event)" aria-label="Keralatravi home">KERALATRAVI</a>
+  <a class="brand" href="#top" (click)="go('top', $event)" aria-label="Greenmiles home">
+    <!-- one-colour white over the hero video, full colour over page content -->
+    <app-logo [mono]="!overContent()" [height]="40" />
+  </a>
 
   <nav id="site-nav" class="links glass" [class.glass--clear]="!overContent()" [class.open]="menuOpen()" aria-label="Primary">
     @for (l of links; track l.id) {

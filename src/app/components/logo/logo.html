@@ -1,0 +1,12 @@
+<svg [attr.viewBox]="viewBox()" role="img" aria-label="Greenmiles" focusable="false">
+  @if (showLetters()) {
+    @for (p of letters; track $index) {
+      <path [attr.d]="p.d" [class]="p.c" />
+    }
+  }
+  @if (showMark()) {
+    @for (p of mark; track $index) {
+      <path [attr.d]="p.d" [class]="p.c" />
+    }
+  }
+</svg>

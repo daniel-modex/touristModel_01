@@ -47,12 +47,25 @@
 }
 
 .brand {
-  font-weight: 700;
-  font-size: 0.9375rem;
-  letter-spacing: 0.02em;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+  color: #fff; /* mono logo colour over the hero */
+  filter: drop-shadow(0 1px 12px rgb(0 0 0 / 0.35));
+  transition: transform 0.5s var(--spring);
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.97);
+    transition-duration: 0.12s;
+  }
+}
+
+.over-content .brand {
+  filter: none;
 }
 
 .links {
@@ -152,14 +165,6 @@
 .over-content .lang button[aria-pressed='true'] {
   background: var(--ink);
   color: var(--bg);
-}
-
-.brand {
-  text-shadow: 0 1px 14px rgb(0 0 0 / 0.35);
-}
-
-.over-content .brand {
-  text-shadow: none;
 }
 
 .over-content .login {

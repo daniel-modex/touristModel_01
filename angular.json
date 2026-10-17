@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "kerala-travel": {
+    "greenmiles": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -91,10 +91,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "kerala-travel:build:production"
+              "buildTarget": "greenmiles:build:production"
             },
             "development": {
-              "buildTarget": "kerala-travel:build:development"
+              "buildTarget": "greenmiles:build:development"
             }
           },
           "defaultConfiguration": "development"

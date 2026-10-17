@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { NAV_LINKS } from '../../data/content';
+import { Logo } from '../logo/logo';
 
 /**
  * Floating navigation (Liquid Glass functional layer). It stays above the
@@ -8,6 +9,7 @@ import { NAV_LINKS } from '../../data/content';
  */
 @Component({
   selector: 'app-header',
+  imports: [Logo],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

@@ -1,0 +1,26 @@
+:host {
+  display: inline-block;
+  line-height: 0;
+}
+
+svg {
+  display: block;
+  height: 100%;
+  width: auto;
+  overflow: visible;
+}
+
+/* brand colours (override --logo-green / --logo-blue to retheme) */
+.g {
+  fill: var(--logo-green, #68b42c);
+}
+
+.b {
+  fill: var(--logo-blue, #008bd2);
+}
+
+/* one-colour version follows the surrounding text colour */
+:host(.mono) .g,
+:host(.mono) .b {
+  fill: currentColor;
+}
