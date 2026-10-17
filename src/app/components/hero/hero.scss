@@ -48,6 +48,16 @@
     inset: 0;
     pointer-events: none;
   }
+
+  .outro {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 90% at 50% 45%, transparent 38%, rgb(3 18 12 / 0.55) 100%),
+      linear-gradient(180deg, rgb(3 18 12 / 0.1), rgb(3 18 12 / 0.3));
+  }
 }
 
 .copy {
@@ -67,12 +77,16 @@
   }
 
   &.text-in {
+    /* even in-out curve, so the beats really do finish when the window ends (not long before) */
+    --ease-copy: cubic-bezier(0.45, 0.05, 0.2, 1);
+
     h1 {
-      animation: rise 2.2s var(--ease) 0.7s both;
+      /* The three beats share one window (--copy-t): it starts 5 s into the footage and ends 1 s before it finishes. */
+      animation: rise calc(var(--copy-t, 3s) * 0.6) var(--ease-copy) 0s both;
     }
 
     p {
-      animation: rise 2.2s var(--ease) 1.05s both;
+      animation: rise calc(var(--copy-t, 3s) * 0.6) var(--ease-copy) calc(var(--copy-t, 3s) * 0.17) both;
     }
   }
 
@@ -105,7 +119,7 @@
 
   &.text-in {
     /* no blur filter here: it would interfere with the glass backdrop */
-    animation: rise-glass 1.6s var(--ease) 1.4s both;
+    animation: rise-glass calc(var(--copy-t, 3s) * 0.67) var(--ease-copy) calc(var(--copy-t, 3s) * 0.33) both;
   }
 }
 

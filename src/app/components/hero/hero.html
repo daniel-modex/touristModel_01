@@ -13,6 +13,8 @@
       disableremoteplayback
       preload="auto"
       (loadeddata)="motion.heroReady.set(true)"
+      (loadedmetadata)="onMeta(heroVideo)"
+      (playing)="onPlaying()"
       (ended)="onEnded()"
       (canplay)="tryPlay()"
     >
@@ -20,9 +22,11 @@
     <!-- scroll-driven: glass blur + scrim, invisible until the page scrolls -->
     <div class="scrim" aria-hidden="true"></div>
     <div class="backdrop" aria-hidden="true"></div>
+    <!-- fades in over the last frame (see onEnded) -->
+    <div class="outro" aria-hidden="true"></div>
   </div>
 
-  <div class="copy" [class.text-in]="textReady()">
+  <div class="copy" [class.text-in]="textReady()" [style.--copy-t.s]="copyDuration()">
     <h1>Extraordinary natural and<br />cultural charm</h1>
     <p>Exploring Kerala is an unforgettable adventure.</p>
 
@@ -51,7 +55,7 @@
 
   <div class="stats">
     @for (s of stats; track s.label; let i = $index) {
-      <div class="stat" [appReveal]="i * 120">
+      <div class="stat" [appReveal]="1300 + i * 140">
         <strong
           [appCountUp]="s.value"
           [decimals]="s.decimals ?? 0"

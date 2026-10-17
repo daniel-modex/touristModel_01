@@ -33,6 +33,11 @@
     transform: none;
   }
 
+  /* first appearance only: the nav arrives a beat after the picture starts to clear */
+  &.ready:not(.settled) {
+    transition-delay: 0.45s, 0.45s;
+  }
+
   &.ready.hide {
     transform: translateY(-120%);
   }

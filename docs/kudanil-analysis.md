@@ -57,3 +57,16 @@ windows are typical visiting seasons, not forecasts.
   (an ancestor with `opacity < 1`, `filter`, `clip-path`, `mask` or `will-change` for those). The glass logo's clip-path /
   mask are therefore applied to the glass elements themselves, never to an ancestor.
 - **Hero zoom** is applied from the first paint (hidden under the blur) so the picture only ever moves one way.
+
+## Hero timeline (staged on the footage's own clock)
+
+| When | What |
+|---|---|
+| Loader unblur starts | Header (logo, links, language, Log In) eases in first (+0.45 s). |
+| a beat later | The stats row at the bottom follows (staggered, +1.3 s). Both are done before the loader is gone. |
+| Footage starts (loader gone) | Footage plays from 0:00 on a picture that has already settled; nothing else moves. |
+| **5 s** into the footage | Headline, subtitle and search begin (read from the video's clock, not a timer). |
+| **duration − 1 s** (≈ 8 s of 9.03 s) | They finish: the window is computed from the real clip length (`--copy-t`). |
+| footage ends | The last frame fades in a soft vignette and the picture pushes slowly inward (1× → 1.075×, `power3.out` over 4.2 s) so it eases smoothly to a stop. |
+
+If autoplay is blocked the content still appears (4 s after the 5 s mark); under Reduce Motion everything is shown immediately.

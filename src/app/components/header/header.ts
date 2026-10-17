@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
+import { Component, HostListener, OnInit, effect, inject, signal } from '@angular/core';
 import { NAV_LINKS } from '../../data/content';
 import { Motion } from '../../motion/motion.service';
 import { Logo } from '../logo/logo';
@@ -24,6 +24,15 @@ export class Header implements OnInit {
   protected readonly hidden = signal(false);
   protected readonly motion = inject(Motion);
   private lastY = 0;
+
+  /** after the first reveal, hide/show on scroll must not be delayed */
+  protected readonly settled = signal(false);
+
+  constructor() {
+    effect(() => {
+      if (this.motion.introStarted()) setTimeout(() => this.settled.set(true), 2000);
+    });
+  }
 
   ngOnInit(): void {
     this.onScroll();

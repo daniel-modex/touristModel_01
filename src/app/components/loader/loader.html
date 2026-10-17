@@ -12,7 +12,7 @@
             <!-- unfilled ghost of the logo, visible from the start -->
             <svg class="ghost" [attr.viewBox]="viewBox" focusable="false">
               @for (p of paths; track $index) {
-                <path [attr.d]="p.d" />
+                <path [attr.d]="p.d" [class]="p.c" />
               }
             </svg>
 
@@ -23,10 +23,16 @@
             <!-- 2) glass body: soft fill, bright rim, inner highlight, moving sheen -->
             <svg class="body front" [attr.viewBox]="viewBox" focusable="false">
               <defs>
-                <linearGradient id="glFill" gradientUnits="userSpaceOnUse" [attr.x1]="vb[0]" [attr.y1]="vb[1]" [attr.x2]="vb[0]" [attr.y2]="vb[1] + vb[3]">
-                  <stop offset="0" stop-color="#fff" stop-opacity="0.5" />
-                  <stop offset="0.55" stop-color="#fff" stop-opacity="0.16" />
-                  <stop offset="1" stop-color="#fff" stop-opacity="0.3" />
+                <!-- brand green / brand blue, as tinted frosted glass: lighter and clearer at the top, deeper at the base -->
+                <linearGradient id="glFillG" gradientUnits="userSpaceOnUse" [attr.x1]="vb[0]" [attr.y1]="vb[1]" [attr.x2]="vb[0]" [attr.y2]="vb[1] + vb[3]">
+                  <stop offset="0" stop-color="#c6f092" stop-opacity="0.96" />
+                  <stop offset="0.5" stop-color="#6cbb2c" stop-opacity="0.9" />
+                  <stop offset="1" stop-color="#58a921" stop-opacity="0.94" />
+                </linearGradient>
+                <linearGradient id="glFillB" gradientUnits="userSpaceOnUse" [attr.x1]="vb[0]" [attr.y1]="vb[1]" [attr.x2]="vb[0]" [attr.y2]="vb[1] + vb[3]">
+                  <stop offset="0" stop-color="#8ad8ff" stop-opacity="0.96" />
+                  <stop offset="0.5" stop-color="#0897e0" stop-opacity="0.9" />
+                  <stop offset="1" stop-color="#007cbf" stop-opacity="0.94" />
                 </linearGradient>
                 <linearGradient id="glRim" gradientUnits="userSpaceOnUse" [attr.x1]="vb[0]" [attr.y1]="vb[1]" [attr.x2]="vb[0] + vb[2]" [attr.y2]="vb[1] + vb[3]">
                   <stop offset="0" stop-color="#fff" stop-opacity="0.95" />
@@ -48,7 +54,7 @@
 
               <g class="fill">
                 @for (p of paths; track $index) {
-                  <path [attr.d]="p.d" fill="url(#glFill)" stroke="url(#glRim)" stroke-width="2.6" stroke-linejoin="round" />
+                  <path [attr.d]="p.d" [attr.fill]="p.c === 'g' ? 'url(#glFillG)' : 'url(#glFillB)'" stroke="url(#glRim)" stroke-width="2.6" stroke-linejoin="round" />
                 }
               </g>
 

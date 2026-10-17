@@ -1,4 +1,4 @@
-<header class="bar" [class.over-content]="overContent()" [class.ready]="motion.introStarted()" [class.hide]="hidden()" (focusin)="hidden.set(false)">
+<header class="bar" [class.over-content]="overContent()" [class.ready]="motion.introStarted()" [class.settled]="settled()" [class.hide]="hidden()" (focusin)="hidden.set(false)">
   <a class="brand" href="#top" (click)="go('top', $event)" aria-label="Greenmiles home">
     <!-- one-colour white over the hero video, full colour over page content -->
     <app-logo [mono]="!overContent()" [height]="40" />

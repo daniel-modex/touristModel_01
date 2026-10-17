@@ -20,6 +20,13 @@ export class Hero implements AfterViewInit, OnDestroy {
   private entered = false;
   protected readonly stats = STATS;
   protected readonly textReady = signal(false);
+  /** seconds into the footage at which the headline + search begin to animate */
+  private readonly COPY_START = 5;
+  /** the headline + search finish this long before the footage ends */
+  private readonly COPY_END_BEFORE = 1;
+  /** length of the headline/search animation window (s); set from the clip's real duration */
+  protected readonly copyDuration = signal(3);
+  private watching = false;
   private finished = false;
   protected date = '';
   protected budget = '';
@@ -28,15 +35,17 @@ export class Hero implements AfterViewInit, OnDestroy {
   protected readonly guestOptions = ['1 Guest', '2 Guests', '3 – 5 Guests', '6+ Guests'];
 
   constructor() {
-    // The loader lifts -> headline, search and stats play their entrance, and the picture settles.
+    // The loader lifts -> the picture settles. (Header and stats are staged by their own delays;
+    // the headline and search wait for the footage itself, see onPlaying().)
     effect(() => {
-      if (!this.motion.introStarted()) return;
-      this.textReady.set(true);
-      this.playEntrance();
+      if (this.motion.introStarted()) this.playEntrance();
     });
     // The footage itself starts only once the loader has completely gone, so nothing is missed behind it.
     effect(() => {
-      if (this.motion.loaderDone()) this.tryPlay();
+      if (!this.motion.loaderDone()) return;
+      this.tryPlay();
+      // safety net: if the footage never starts (autoplay blocked), still show the content
+      setTimeout(() => this.textReady.set(true), (this.COPY_START + 4) * 1000);
     });
   }
 
@@ -131,9 +140,45 @@ export class Hero implements AfterViewInit, OnDestroy {
     });
   }
 
+  /** Footage metadata: the headline/search window runs from COPY_START to one second before the end. */
+  protected onMeta(video: HTMLVideoElement): void {
+    if (Number.isFinite(video.duration)) {
+      this.copyDuration.set(Math.max(1.6, video.duration - this.COPY_END_BEFORE - this.COPY_START));
+    }
+  }
+
+  /** Footage is playing: watch its clock and start the headline + search at COPY_START. */
+  protected onPlaying(): void {
+    if (this.watching || this.textReady()) return;
+    this.watching = true;
+    this.zone.runOutsideAngular(() => {
+      const v = this.video().nativeElement;
+      const tick = () => {
+        if (this.textReady()) return void (this.watching = false);
+        if (v.currentTime >= this.COPY_START) {
+          this.watching = false;
+          this.zone.run(() => this.textReady.set(true));
+          return;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
+  /**
+   * The footage has ended and holds on its last frame: that frame fades in a soft vignette and the
+   * picture slowly pushes inward, easing out so it comes smoothly to rest.
+   */
   protected onEnded(): void {
     this.finished = true;
     this.textReady.set(true);
+    if (this.motion.reduced) return;
+    this.zone.runOutsideAngular(() => {
+      const { gsap } = this.motion;
+      gsap.to(this.host.querySelector('.media'), { scale: 1.075, duration: 4.2, ease: 'power3.out', overwrite: 'auto' });
+      gsap.to(this.host.querySelector('.outro'), { opacity: 1, duration: 3.4, ease: 'power2.out' });
+    });
   }
 
   protected search(): void {
