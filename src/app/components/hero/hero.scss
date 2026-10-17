@@ -68,11 +68,11 @@
 
   &.text-in {
     h1 {
-      animation: rise 2.2s var(--ease) both;
+      animation: rise 2.2s var(--ease) 0.7s both;
     }
 
     p {
-      animation: rise 2.2s var(--ease) 0.35s both;
+      animation: rise 2.2s var(--ease) 1.05s both;
     }
   }
 
@@ -105,7 +105,7 @@
 
   &.text-in {
     /* no blur filter here: it would interfere with the glass backdrop */
-    animation: rise-glass 1.6s var(--ease) 0.5s both;
+    animation: rise-glass 1.6s var(--ease) 1.4s both;
   }
 }
 

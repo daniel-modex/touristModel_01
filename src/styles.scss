@@ -327,7 +327,7 @@ p {
 }
 
 /* ------------------------------------------------------------------ *
- * Lenis smooth scroll (recommended base rules) + loader scroll lock
+ * Lenis smooth scroll (recommended base rules)
  * ------------------------------------------------------------------ */
 html.lenis,
 html.lenis body {
@@ -336,15 +336,6 @@ html.lenis body {
 
 html.lenis {
   scroll-behavior: auto !important;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-html.scroll-locked,
-html.scroll-locked body {
-  overflow: hidden;
 }
 
 /* ------------------------------------------------------------------ *

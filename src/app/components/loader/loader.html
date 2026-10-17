@@ -2,26 +2,79 @@
   <div #root class="loader" role="status" aria-live="polite">
     <span class="sr-only">Loading Greenmiles</span>
 
-    <div class="sheet" aria-hidden="true">
-      <!-- slow, blurred pools of colour: the "liquid" the glass floats on -->
-      <div class="orbs">
-        <i class="orb o1"></i>
-        <i class="orb o2"></i>
-        <i class="orb o3"></i>
-        <i class="orb o4"></i>
-      </div>
-      <div class="noise"></div>
+    <!-- the hero video behind, very blurred; this clears progressively when loading ends -->
+    <div class="veil" aria-hidden="true"></div>
 
-      <!-- Liquid Glass capsule holding the logo -->
-      <div class="capsule">
-        <div class="logo-wrap">
-          <!-- dim copy underneath -->
-          <div class="logo-mask">
-            <div class="logo-layer logo-back"><app-logo [mono]="true" [height]="76" /></div>
-          </div>
-          <!-- bright copy: its clip-path sweeps open as loading progresses -->
-          <div class="logo-mask front-mask">
-            <div class="logo-layer logo-front"><app-logo [mono]="true" [height]="76" /></div>
+    <div class="logo-wrap" aria-hidden="true">
+      <div class="logo-mask">
+        <div class="logo-layer">
+          <div class="glass-logo" [style.aspect-ratio]="ratio">
+            <!-- unfilled ghost of the logo, visible from the start -->
+            <svg class="ghost" [attr.viewBox]="viewBox" focusable="false">
+              @for (p of paths; track $index) {
+                <path [attr.d]="p.d" />
+              }
+            </svg>
+
+            <!-- Liquid Glass, revealed left to right by the sweep:
+                 1) the blurred scene refracted through the letter shapes -->
+            <div class="refract front"></div>
+
+            <!-- 2) glass body: soft fill, bright rim, inner highlight, moving sheen -->
+            <svg class="body front" [attr.viewBox]="viewBox" focusable="false">
+              <defs>
+                <linearGradient id="glFill" gradientUnits="userSpaceOnUse" [attr.x1]="vb[0]" [attr.y1]="vb[1]" [attr.x2]="vb[0]" [attr.y2]="vb[1] + vb[3]">
+                  <stop offset="0" stop-color="#fff" stop-opacity="0.5" />
+                  <stop offset="0.55" stop-color="#fff" stop-opacity="0.16" />
+                  <stop offset="1" stop-color="#fff" stop-opacity="0.3" />
+                </linearGradient>
+                <linearGradient id="glRim" gradientUnits="userSpaceOnUse" [attr.x1]="vb[0]" [attr.y1]="vb[1]" [attr.x2]="vb[0] + vb[2]" [attr.y2]="vb[1] + vb[3]">
+                  <stop offset="0" stop-color="#fff" stop-opacity="0.95" />
+                  <stop offset="0.5" stop-color="#fff" stop-opacity="0.35" />
+                  <stop offset="1" stop-color="#fff" stop-opacity="0.8" />
+                </linearGradient>
+                <linearGradient id="glSheen" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#fff" stop-opacity="0" />
+                  <stop offset="0.5" stop-color="#fff" stop-opacity="0.7" />
+                  <stop offset="1" stop-color="#fff" stop-opacity="0" />
+                </linearGradient>
+                <filter id="glSoft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.1" /></filter>
+                <clipPath id="glShape">
+                  @for (p of paths; track $index) {
+                    <path [attr.d]="p.d" />
+                  }
+                </clipPath>
+              </defs>
+
+              <g class="fill">
+                @for (p of paths; track $index) {
+                  <path [attr.d]="p.d" fill="url(#glFill)" stroke="url(#glRim)" stroke-width="2.6" stroke-linejoin="round" />
+                }
+              </g>
+
+              <g clip-path="url(#glShape)">
+                <!-- light catching the top inner edges / a faint caustic along the bottom ones -->
+                <g transform="translate(0 4.5)" fill="none" stroke="#fff" stroke-opacity="0.85" stroke-width="2.6" filter="url(#glSoft)">
+                  @for (p of paths; track $index) {
+                    <path [attr.d]="p.d" />
+                  }
+                </g>
+                <g transform="translate(0 -4.5)" fill="none" stroke="#fff" stroke-opacity="0.28" stroke-width="2.4" filter="url(#glSoft)">
+                  @for (p of paths; track $index) {
+                    <path [attr.d]="p.d" />
+                  }
+                </g>
+                <rect
+                  class="sheen"
+                  [attr.x]="vb[0] - 180"
+                  [attr.y]="vb[1]"
+                  width="180"
+                  [attr.height]="vb[3]"
+                  fill="url(#glSheen)"
+                  [style.--travel.px]="sheenTravel"
+                />
+              </g>
+            </svg>
           </div>
         </div>
       </div>

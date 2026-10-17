@@ -17,6 +17,9 @@ export class Motion {
   readonly ScrollTrigger = ScrollTrigger;
   readonly SplitText = SplitText;
 
+  /** The loader's blur clears and the hero settles over exactly this long / with this easing. */
+  readonly REVEAL = { duration: 2.4, ease: 'sine.inOut' } as const;
+
   /** User asked for less motion: no smooth scroll, scrubbing, pinning or loader. */
   readonly reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -46,19 +49,39 @@ export class Motion {
     });
   }
 
-  /** Freeze scrolling (loader, modals). Calls nest. */
+  /**
+   * Freeze scrolling (loader, modals). Calls nest.
+   *
+   * Deliberately NOT done with `overflow: hidden`: that removes the page scrollbar on desktop and
+   * giving it back later narrows the viewport by ~15px, which re-lays-out the hero video and makes
+   * it visibly snap into place. Blocking the input events leaves the layout untouched.
+   */
   lock(): void {
     if (this.locks++ > 0) return;
     this.lenis?.stop();
-    document.documentElement.classList.add('scroll-locked');
+    window.addEventListener('wheel', this.block, { passive: false });
+    window.addEventListener('touchmove', this.block, { passive: false });
+    window.addEventListener('keydown', this.blockKeys);
   }
 
   unlock(): void {
     if (--this.locks > 0) return;
     this.locks = 0;
+    window.removeEventListener('wheel', this.block);
+    window.removeEventListener('touchmove', this.block);
+    window.removeEventListener('keydown', this.blockKeys);
     this.lenis?.start();
-    document.documentElement.classList.remove('scroll-locked');
   }
+
+  private readonly block = (e: Event): void => {
+    e.preventDefault();
+  };
+
+  private readonly blockKeys = (e: KeyboardEvent): void => {
+    const tag = (e.target as HTMLElement | null)?.tagName;
+    if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+    if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ', 'Spacebar'].includes(e.key)) e.preventDefault();
+  };
 
   /** Smooth-scroll to a section id / element / pixel position. The page's CSS scroll-padding-top (header height) is honoured. */
   scrollTo(target: string | HTMLElement | number, offset = 0): void {

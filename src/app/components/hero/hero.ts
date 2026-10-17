@@ -42,7 +42,10 @@ export class Hero implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.tryPlay();
-    if (!this.motion.reduced) this.zone.runOutsideAngular(() => this.setupScrollBlur());
+    if (!this.motion.reduced) {
+      this.prepareEntrance();
+      this.zone.runOutsideAngular(() => this.setupScrollBlur());
+    }
   }
 
   ngOnDestroy(): void {
@@ -50,17 +53,25 @@ export class Hero implements AfterViewInit, OnDestroy {
     this.scrub?.kill();
   }
 
-  /** Picture settles from a slight zoom as the loader rolls away. */
+  /**
+   * The picture starts slightly zoomed (from the very first paint, while it is still hidden under the
+   * loader's blur) and settles to 1x over exactly the unblur's duration and easing (Motion.REVEAL), so it
+   * only ever moves smoothly in one direction and is at rest when the footage starts. No jump, no snap.
+   */
+  private prepareEntrance(): void {
+    this.zone.runOutsideAngular(() => this.motion.gsap.set(this.host.querySelector('.media'), { scale: 1.14 }));
+  }
+
   private playEntrance(): void {
     if (this.entered || this.motion.reduced) return;
     this.entered = true;
     this.zone.runOutsideAngular(() => {
-      const media = this.host.querySelector('.media');
-      this.motion.gsap.fromTo(
-        media,
-        { scale: 1.18 },
-        { scale: 1, duration: 2.8, ease: 'power3.out', clearProps: 'transform' },
-      );
+      this.motion.gsap.to(this.host.querySelector('.media'), {
+        scale: 1,
+        duration: this.motion.REVEAL.duration,
+        ease: this.motion.REVEAL.ease,
+        clearProps: 'transform',
+      });
     });
   }
 

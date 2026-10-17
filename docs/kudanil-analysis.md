@@ -14,7 +14,7 @@ so every scroll animation is scrubbed against the smoothed scroll position.
 
 | Technique (reference) | How it works there | Greenmiles |
 |---|---|---|
-| **Loader** | Two stacked copies of the logo (50 % opacity back, white front). Each slides up out of an `overflow:hidden` mask with a stagger; the front copy's `clip-path` polygon sweeps open as "progress" runs. A film-grain SVG layer sits on a navy gradient. On completion the logo scales down and lifts away while the navy panel moves up, uncovering the hero (a clone of the hero text eases in with scale 1.3→1). | `components/loader`: same layering and sweep; the sweep creeps to 85 % then finishes when the hero video's first frame is ready (4.5 s timeout). Logo lifts, the panel rolls up, then the hero picture settles from a 1.18× zoom and the text enters. Skipped under Reduce Motion. The background is a deep forest green sampled from the hero footage (it opens on olive `#15130c`) with slow drifting pools of brand-green light and grain; the logo sits in a Liquid Glass capsule with a moving highlight, and the panel's lower edge is curved so the roll-up reads as a liquid curtain. The hero video is held on its first frame and only starts once the loader has fully gone. |
+| **Loader** | Two stacked copies of the logo (50 % opacity back, white front). Each slides up out of an `overflow:hidden` mask with a stagger; the front copy's `clip-path` polygon sweeps open as "progress" runs. A film-grain SVG layer sits on a navy gradient. On completion the logo scales down and lifts away while the navy panel moves up, uncovering the hero (a clone of the hero text eases in with scale 1.3→1). | `components/loader`: no panel and no flat colour. The hero video itself is the backdrop, under a very strong `backdrop-filter` blur with a faint green tint and grain. The logo is drawn as **Liquid Glass directly on the page** (refraction layer masked to the letter shapes, gradient body, bright rim, inner highlights, moving sheen; nothing around it) and fills in left to right as loading progresses (waits for the hero's first frame, 4.5 s timeout). Then the logo rises away while the blur clears progressively over 2.4 s (`sine.inOut`) and the hero picture settles from 1.14× to 1× in lockstep. The footage is held on frame 0 and starts only once the loader is gone. Skipped under Reduce Motion. |
 | **Hero exit on scroll** | A `.backdrop` layer's `backdrop-filter: blur()` is scrubbed 0 → 16 rem while the background scales to 1.02 and the headline fades up and shrinks. | `Hero.setupScrollBlur`: blur 0 → 22 px (set to `none` at 0 so the resting video is never touched), scrim fade, video scale 1.08, copy/stats drift up. Trigger is the whole intro scene. |
 | **Hero stays as the background** | Sections that follow have transparent backgrounds over the blurred hero. | `app-intro`: the hero is `position: sticky`; the story scrolls over it. No pin-spacers, just CSS sticky + ScrollTrigger scrub. |
 | **Flying photo stack** | Gallery cards start as a tilted pile (random x/rotation), then scrub to their final grid positions; text lines fade in/out one at a time on a scrubbed timeline. | `components/story`: six Kerala photos fly from a pile to their places, three statement lines play in sequence, everything fades before the next section slides over. Phones use four smaller cards. |
@@ -47,3 +47,13 @@ states no licence, so it is credited rather than re-licensed). `scripts/build-ke
 `src/app/data/kerala-map.ts`. Pins are placed at real latitude/longitude, e.g. Munnar 10.0889 N 77.0595 E.
 Figures shown: 14 districts, 44 rivers, 590 km of coastline (Government of Kerala figures). "Best time"
 windows are typical visiting seasons, not forecasts.
+
+## Loader implementation notes
+
+- **Scroll lock without layout shift.** The loader blocks wheel / touch / keyboard scrolling with listeners instead of
+  `overflow: hidden`. Hiding overflow removes the desktop scrollbar and giving it back later narrows the page by ~15 px,
+  which re-lays-out the hero and made the video visibly snap into place just as it started.
+- **Backdrop roots.** `backdrop-filter` only sees what is behind it up to the nearest "backdrop root"
+  (an ancestor with `opacity < 1`, `filter`, `clip-path`, `mask` or `will-change` for those). The glass logo's clip-path /
+  mask are therefore applied to the glass elements themselves, never to an ancestor.
+- **Hero zoom** is applied from the first paint (hidden under the blur) so the picture only ever moves one way.

@@ -1,4 +1,5 @@
-import { Directive, ElementRef, OnDestroy, OnInit, inject, input } from '@angular/core';
+import { Directive, ElementRef, OnDestroy, effect, inject, input } from '@angular/core';
+import { Motion } from '../motion/motion.service';
 
 /**
  * Scroll reveal: element starts blurred / translated / transparent and
@@ -8,13 +9,24 @@ import { Directive, ElementRef, OnDestroy, OnInit, inject, input } from '@angula
   selector: '[appReveal]',
   host: { class: 'reveal', '[style.--d]': '"" + delay() + "ms"' },
 })
-export class RevealDirective implements OnInit, OnDestroy {
+export class RevealDirective implements OnDestroy {
   /** Stagger delay in ms. */
   readonly delay = input(0, { alias: 'appReveal', transform: (v: number | string) => Number(v) || 0 });
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly motion = inject(Motion);
   private observer?: IntersectionObserver;
+  private started = false;
 
-  ngOnInit(): void {
+  constructor() {
+    // elements already on screen at load (hero stats) wait for the loader to lift before playing
+    effect(() => {
+      if (this.motion.introStarted()) this.start();
+    });
+  }
+
+  private start(): void {
+    if (this.started) return;
+    this.started = true;
     if (typeof IntersectionObserver === 'undefined') {
       this.el.classList.add('in');
       return;

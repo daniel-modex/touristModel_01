@@ -1,4 +1,5 @@
-import { Directive, ElementRef, OnDestroy, OnInit, inject, input } from '@angular/core';
+import { Directive, ElementRef, OnDestroy, OnInit, effect, inject, input } from '@angular/core';
+import { Motion } from '../motion/motion.service';
 
 /** Counts the element's number up from 0 when it scrolls into view. */
 @Directive({ selector: '[appCountUp]' })
@@ -8,11 +9,24 @@ export class CountUpDirective implements OnInit, OnDestroy {
   readonly pad = input(0);
   readonly suffix = input('');
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly motion = inject(Motion);
   private observer?: IntersectionObserver;
   private frame = 0;
+  private started = false;
+
+  constructor() {
+    effect(() => {
+      if (this.motion.introStarted()) this.watch();
+    });
+  }
 
   ngOnInit(): void {
     this.render(0);
+  }
+
+  private watch(): void {
+    if (this.started) return;
+    this.started = true;
     if (typeof IntersectionObserver === 'undefined') {
       this.render(this.target());
       return;
