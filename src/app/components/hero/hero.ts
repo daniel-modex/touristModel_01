@@ -14,7 +14,6 @@ import { Header } from '../header/header';
 export class Hero implements OnInit, AfterViewInit {
   private readonly video = viewChild.required<ElementRef<HTMLVideoElement>>('heroVideo');
   protected readonly stats = STATS;
-  protected readonly videoReady = signal(false);
   protected readonly textReady = signal(false);
   private finished = false;
   protected date = '';

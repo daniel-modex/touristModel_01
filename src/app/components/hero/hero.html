@@ -3,21 +3,17 @@
     <video
       #heroVideo
       class="video"
-      [class.ready]="videoReady()"
       src="video/kerala-hero.mp4"
       autoplay
       muted
       [muted]="true"
       playsinline
       preload="auto"
-      (loadeddata)="videoReady.set(true)"
-      (playing)="videoReady.set(true)"
       (timeupdate)="onTimeUpdate(heroVideo)"
       (ended)="onEnded()"
       (canplay)="tryPlay()"
     >
     </video>
-    <div class="shade"></div>
   </div>
 
   <app-header />
