@@ -1,12 +1,13 @@
 name: Deploy Greenmiles to GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
-      - master
-      - claude/kudanil-inspired-motion
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy (leave blank to use the branch selected in the dropdown above)'
+        required: false
+        default: ''
+        type: string
 
 # Permissions required for GitHub Pages deployment
 permissions:
@@ -29,6 +30,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.branch != '' && inputs.branch || github.ref }}
           lfs: true
 
       - name: Setup Node.js
