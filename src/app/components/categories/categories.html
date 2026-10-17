@@ -13,6 +13,7 @@
     </button>
 
     <div #rail class="rail" [class.fade-start]="canScrollPrev()" [class.fade-end]="canScrollNext()" role="tablist" aria-label="Kerala travel categories" (scroll)="updateEdges()" (keydown)="onKey($event)">
+      <span class="ind" aria-hidden="true" [class.ready]="indReady()" [style.--x.px]="indX()" [style.--w.px]="indW()"></span>
       @for (c of categories; track c.id) {
         <button
           type="button"
@@ -46,6 +47,7 @@
   </div>
 
   <div id="panel" class="panel" role="tabpanel" [attr.aria-labelledby]="'tab-' + selectedId()" tabindex="0">
+    <div class="swap" [class.out]="leaving()">
     <p class="count" aria-live="polite">
       <strong>{{ selected().label }}</strong> · {{ selected().places.length }} places in Kerala
     </p>
@@ -67,5 +69,6 @@
         }
       </ul>
     }
+    </div>
   </div>
 </section>

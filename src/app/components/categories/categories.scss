@@ -25,6 +25,7 @@
 }
 
 .rail {
+  position: relative;
   display: flex;
   gap: 4px;
   overflow-x: auto;
@@ -88,20 +89,6 @@
     white-space: nowrap;
   }
 
-  /* underline that springs in under the selected tab */
-  &::after {
-    content: '';
-    position: absolute;
-    left: 14px;
-    right: 14px;
-    bottom: 0;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--ink);
-    transform: scaleX(0);
-    transition: transform 0.5s var(--spring);
-  }
-
   &:hover {
     color: var(--ink);
 
@@ -126,9 +113,25 @@
       stroke-width: 1.8;
     }
 
-    &::after {
-      transform: scaleX(1);
-    }
+  }
+}
+
+/* one selection line that glides between tabs (a shared element, as in Apple's segmented controls) */
+.ind {
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: var(--w, 0px);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transform: translateX(var(--x, 0px));
+  pointer-events: none;
+
+  &.ready {
+    transition:
+      transform 0.5s var(--ease),
+      width 0.5s var(--ease);
   }
 }
 
@@ -205,9 +208,32 @@
   gap: 16px;
 }
 
+/* the whole result block steps back quickly when a category is picked, then the new one rises in */
+.swap {
+  transition:
+    opacity 0.13s ease-in,
+    transform 0.13s ease-in,
+    filter 0.13s ease-in;
+
+  &.out {
+    opacity: 0;
+    transform: translateY(6px) scale(0.992);
+    filter: blur(4px);
+  }
+}
+
+.panel.resizing {
+  overflow: clip;
+  overflow-clip-margin: 32px;
+}
+
 .place {
-  /* staggered arrival each time the category changes */
-  animation: place-in 0.6s var(--ease) calc(var(--i) * 70ms) both;
+  /* short stagger (40ms) so six cards still land within ~0.5s */
+  animation: place-in 0.5s var(--ease) calc(var(--i) * 40ms) both;
+}
+
+.count {
+  animation: count-in 0.4s var(--ease) both;
 }
 
 .card {
@@ -295,7 +321,15 @@
 @keyframes place-in {
   from {
     opacity: 0;
-    transform: translateY(18px) scale(0.98);
+    transform: translateY(16px) scale(0.985);
+    filter: blur(6px);
+  }
+}
+
+@keyframes count-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 
@@ -316,13 +350,18 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .place {
+  .place,
+  .count {
     animation: none;
   }
 
+  .swap,
+  .ind.ready {
+    transition-duration: 0.01ms;
+  }
+
   .tab,
-  .tab .ico,
-  .tab::after {
+  .tab .ico {
     transition-duration: 0.01ms;
   }
 }

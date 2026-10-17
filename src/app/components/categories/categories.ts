@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, computed, signal, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, computed, inject, signal, viewChild } from '@angular/core';
 import { CATEGORIES } from '../../data/categories';
 import { RevealDirective } from '../../directives/reveal.directive';
 
@@ -9,16 +9,39 @@ import { RevealDirective } from '../../directives/reveal.directive';
   templateUrl: './categories.html',
   styleUrl: './categories.scss',
 })
-export class Categories implements AfterViewInit {
+export class Categories implements AfterViewInit, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   protected readonly categories = CATEGORIES;
   protected readonly selectedId = signal(CATEGORIES[0].id);
   protected readonly selected = computed(() => CATEGORIES.find((c) => c.id === this.selectedId()) ?? CATEGORIES[0]);
   protected readonly canScrollPrev = signal(false);
   protected readonly canScrollNext = signal(false);
+  protected readonly leaving = signal(false);
+  protected readonly indX = signal(0);
+  protected readonly indW = signal(0);
+  protected readonly indReady = signal(false);
   private readonly rail = viewChild.required<ElementRef<HTMLElement>>('rail');
+  private pendingId = CATEGORIES[0].id;
+  private swapTimer?: ReturnType<typeof setTimeout>;
+  private heightAnim?: Animation;
 
+  /**
+   * Switching is a quick three-beat motion (about 0.4s in total, never blocking input):
+   * the old results step back and fade (130ms), the panel eases to the new height while the new
+   * results rise in with a short stagger, and the selection line slides to the new tab.
+   */
   protected select(id: string, scrollIntoView = false): void {
-    this.selectedId.set(id);
+    this.pendingId = id;
+    this.moveIndicator(id);
+    if (id !== this.selectedId()) {
+      if (this.reduceMotion()) {
+        this.selectedId.set(id);
+      } else if (!this.leaving()) {
+        this.leaving.set(true);
+        this.swapTimer = setTimeout(() => this.swap(), 130);
+      } // already leaving: the swap picks up the latest pendingId
+    }
     if (scrollIntoView) {
       document.getElementById('tab-' + id)?.scrollIntoView({
         inline: 'center',
@@ -48,12 +71,47 @@ export class Categories implements AfterViewInit {
     el.scrollBy({ left: direction * el.clientWidth * 0.7, behavior: this.reduceMotion() ? 'auto' : 'smooth' });
   }
 
+  private swap(): void {
+    const panel = this.host.querySelector<HTMLElement>('.panel')!;
+    const from = panel.offsetHeight;
+    this.selectedId.set(this.pendingId);
+    this.leaving.set(false);
+    this.cdr.detectChanges();
+    const to = panel.offsetHeight;
+    this.heightAnim?.cancel();
+    if (Math.abs(to - from) > 2) {
+      panel.classList.add('resizing');
+      this.heightAnim = panel.animate([{ height: from + 'px' }, { height: to + 'px' }], {
+        duration: 420,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      });
+      this.heightAnim.onfinish = this.heightAnim.oncancel = () => panel.classList.remove('resizing');
+    }
+  }
+
+  /** the selection line slides (and stretches) from tab to tab instead of jumping */
+  private moveIndicator(id: string): void {
+    const tab = document.getElementById('tab-' + id);
+    if (!tab) return;
+    this.indX.set(tab.offsetLeft + 14);
+    this.indW.set(tab.offsetWidth - 28);
+  }
+
   ngAfterViewInit(): void {
     this.updateEdges();
+    this.moveIndicator(this.selectedId());
+    requestAnimationFrame(() => this.indReady.set(true));
+    document.fonts?.ready.then(() => this.moveIndicator(this.pendingId));
+  }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.swapTimer);
+    this.heightAnim?.cancel();
   }
 
   @HostListener('window:resize')
   protected updateEdges(): void {
+    this.moveIndicator(this.pendingId);
     const el = this.rail().nativeElement;
     this.canScrollPrev.set(el.scrollLeft > 4);
     this.canScrollNext.set(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
