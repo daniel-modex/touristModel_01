@@ -34,6 +34,10 @@ export class Hero implements AfterViewInit, OnDestroy {
       this.textReady.set(true);
       this.playEntrance();
     });
+    // The footage itself starts only once the loader has completely gone, so nothing is missed behind it.
+    effect(() => {
+      if (this.motion.loaderDone()) this.tryPlay();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -101,7 +105,8 @@ export class Hero implements AfterViewInit, OnDestroy {
   @HostListener('window:keydown')
   protected tryPlay(): void {
     const video = this.video().nativeElement;
-    if (this.finished || !video.paused) return;
+    // hold on the first frame while the loader is still covering the page
+    if (!this.motion.loaderDone() || this.finished || !video.paused) return;
     // Reduce Motion: keep the first frame as a still instead of autoplaying.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       this.textReady.set(true);

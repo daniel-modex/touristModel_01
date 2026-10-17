@@ -38,7 +38,7 @@ export class Loader implements AfterViewInit, OnDestroy {
     const { gsap } = this.motion;
     const logos = host.querySelectorAll('.logo-layer');
     const front = host.querySelector<HTMLElement>('.logo-front')!;
-    const wrap = host.querySelector('.logo-wrap');
+    const capsule = host.querySelector('.capsule');
     const sheet = host.querySelector('.sheet');
     const progress = { v: 0 };
     const sweep = () => {
@@ -47,13 +47,14 @@ export class Loader implements AfterViewInit, OnDestroy {
     };
     sweep();
     gsap.set(logos, { yPercent: 105 });
+    gsap.set(capsule, { autoAlpha: 0, scale: 0.9 });
 
     const exit = gsap.timeline({ paused: true, onComplete: () => this.zone.run(() => this.finish()) });
     exit
       .to(progress, { v: 1, duration: 0.45, ease: 'power2.out', onUpdate: sweep })
       .addLabel('lift', '+=0.25')
       .call(() => this.zone.run(() => this.motion.introStarted.set(true)), [], 'lift+=0.35')
-      .to(wrap, { scale: 0.8, yPercent: -140, autoAlpha: 0, duration: 0.75, ease: 'power2.in' }, 'lift')
+      .to(capsule, { scale: 0.82, yPercent: -150, autoAlpha: 0, duration: 0.75, ease: 'power2.in' }, 'lift')
       .to(sheet, { yPercent: -100, duration: 1.3, ease: 'power3.inOut' }, 'lift+=0.15');
 
     const start = performance.now();
@@ -68,7 +69,9 @@ export class Loader implements AfterViewInit, OnDestroy {
 
     const enter = gsap.timeline({ onComplete: () => (this.poll = setInterval(whenReady, 80)) });
     enter
-      .to(logos, { yPercent: 0, duration: 0.8, stagger: 0.07, ease: 'power3.out' })
+      // the glass capsule condenses first, then the logo slides up inside it
+      .to(capsule, { autoAlpha: 1, scale: 1, duration: 0.9, ease: 'power3.out' })
+      .to(logos, { yPercent: 0, duration: 0.8, stagger: 0.07, ease: 'power3.out' }, '-=0.45')
       // the sweep keeps creeping while we wait so it never looks stuck
       .to(progress, { v: 0.85, duration: 1.7, ease: 'power2.in', onUpdate: sweep }, '-=0.3');
     this.timelines.push(enter, exit);
