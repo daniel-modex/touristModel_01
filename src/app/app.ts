@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Blog } from './components/blog/blog';
+import { Categories } from './components/categories/categories';
 import { Destinations } from './components/destinations/destinations';
 import { Footer } from './components/footer/footer';
 import { Header } from './components/header/header';
@@ -10,7 +11,7 @@ import { Testimonials } from './components/testimonials/testimonials';
 
 @Component({
   selector: 'app-root',
-  imports: [Header, Hero, Destinations, HowItWorks, Packages, Testimonials, Blog, Footer],
+  imports: [Header, Hero, Categories, Destinations, HowItWorks, Packages, Testimonials, Blog, Footer],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

@@ -17,6 +17,7 @@ npm run build      # production build → dist/kerala-travel
 | Section (top → bottom) | Component |
 |---|---|
 | Hero with Kerala video (plays once), nav, search pill, stat cards | `components/hero`, `components/header` |
+| "Top categories" icon tabs + category results (10 categories × 3 places) | `components/categories`, data in `data/categories.ts` |
 | "Kerala tourism" destination mosaic | `components/destinations` |
 | "One click for you" steps | `components/how-it-works` |
 | "Our tourist destination" packages | `components/packages` |

@@ -1,0 +1,71 @@
+<section class="container cats" id="categories" aria-labelledby="cats-title">
+  <h2 id="cats-title" class="cats-title" appReveal>Top categories</h2>
+
+  <div class="rail-wrap" appReveal="100">
+    <button
+      type="button"
+      class="chev chev-prev glass"
+      aria-label="Scroll categories left"
+      [class.hidden]="!canScrollPrev()"
+      (click)="scrollBy(-1)"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>
+    </button>
+
+    <div #rail class="rail" [class.fade-start]="canScrollPrev()" [class.fade-end]="canScrollNext()" role="tablist" aria-label="Kerala travel categories" (scroll)="updateEdges()" (keydown)="onKey($event)">
+      @for (c of categories; track c.id) {
+        <button
+          type="button"
+          role="tab"
+          class="tab"
+          [id]="'tab-' + c.id"
+          [attr.aria-selected]="selectedId() === c.id"
+          [attr.aria-controls]="'panel'"
+          [attr.tabindex]="selectedId() === c.id ? 0 : -1"
+          (click)="select(c.id, true)"
+        >
+          <svg class="ico" viewBox="0 0 32 32" aria-hidden="true">
+            @for (d of c.icon; track $index) {
+              <path [attr.d]="d" />
+            }
+          </svg>
+          <span class="lbl">{{ c.label }}</span>
+        </button>
+      }
+    </div>
+
+    <button
+      type="button"
+      class="chev chev-next glass"
+      aria-label="Scroll categories right"
+      [class.hidden]="!canScrollNext()"
+      (click)="scrollBy(1)"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+    </button>
+  </div>
+
+  <div id="panel" class="panel" role="tabpanel" [attr.aria-labelledby]="'tab-' + selectedId()" tabindex="0">
+    <p class="count" aria-live="polite">
+      <strong>{{ selected().label }}</strong> · {{ selected().places.length }} places in Kerala
+    </p>
+
+    @for (cat of [selected()]; track cat.id) {
+      <ul class="results">
+        @for (p of cat.places; track p.name; let i = $index) {
+          <li class="place" [style.--i]="i">
+            <a href="#packages" class="card">
+              <img [src]="p.image" [alt]="p.name + ', ' + p.location" loading="lazy" />
+              <div class="meta">
+                <span class="rating"><i aria-hidden="true">★</i> {{ p.rating.toFixed(1) }}</span>
+                <h3>{{ p.name }}</h3>
+                <p>{{ p.location }}</p>
+                <p class="price">From <strong>₹{{ p.price.toLocaleString('en-IN') }}</strong> / {{ p.unit }}</p>
+              </div>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>
