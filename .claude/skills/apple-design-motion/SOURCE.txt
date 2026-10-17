@@ -1,0 +1,1 @@
+Source: https://github.com/gethamster/skills (skills/.experimental/apple-design) @ fe3bb14. Renamed apple-design -> apple-design-motion to avoid clashing with dickwu/apple-design-skill.
