@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Select } from '../select/select';
 import { BUDGETS, GUEST_OPTIONS, STEPS } from '../../data/content';
 import { Motion } from '../../motion/motion.service';
 import { RevealDirective } from '../../directives/reveal.directive';
@@ -7,7 +8,7 @@ import { SplitDirective } from '../../directives/split.directive';
 
 @Component({
   selector: 'app-how-it-works',
-  imports: [FormsModule, RevealDirective, SplitDirective],
+  imports: [FormsModule, Select, RevealDirective, SplitDirective],
   templateUrl: './how-it-works.html',
   styleUrl: './how-it-works.scss',
 })
@@ -29,7 +30,7 @@ export class HowItWorks implements AfterViewInit, OnDestroy {
   private manual = false;
   private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /** one second between highlights */
+  /** time between highlights */
   private static readonly STEP_MS = 2000;
 
   ngAfterViewInit(): void {

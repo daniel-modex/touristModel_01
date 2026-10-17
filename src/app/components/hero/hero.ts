@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, effect, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Select } from '../select/select';
 import { BUDGETS, GUEST_OPTIONS, STATS } from '../../data/content';
 import { CountUpDirective } from '../../directives/count-up.directive';
 import { RevealDirective } from '../../directives/reveal.directive';
@@ -7,7 +8,7 @@ import { Motion } from '../../motion/motion.service';
 
 @Component({
   selector: 'app-hero',
-  imports: [FormsModule, CountUpDirective, RevealDirective],
+  imports: [FormsModule, Select, CountUpDirective, RevealDirective],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })

@@ -148,6 +148,18 @@
     flex: none;
   }
 
+  app-select {
+    flex: none;
+    width: 112px;
+    font-size: 0.875rem;
+
+    /* the longest budget label should show in full once chosen */
+    &.wide {
+      width: 156px;
+    }
+    text-shadow: 0 1px 8px rgb(0 0 0 / 0.4);
+  }
+
   input,
   select {
     background: transparent;
@@ -270,7 +282,9 @@
     align-items: stretch;
 
     .field input,
-    .field select {
+    .field select,
+    .field app-select,
+    .field app-select.wide {
       flex: 1;
       width: auto;
     }
