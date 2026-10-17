@@ -45,18 +45,19 @@
       <button type="submit" class="go">Search Trips</button>
     </form>
   </div>
+
+  <div class="stats">
+    @for (s of stats; track s.label; let i = $index) {
+      <div class="stat" [appReveal]="i * 120">
+        <strong
+          [appCountUp]="s.value"
+          [decimals]="s.decimals ?? 0"
+          [pad]="s.pad ?? 0"
+          [suffix]="s.suffix"
+        >{{ s.display ?? s.value + s.suffix }}</strong>
+        <span>{{ s.label }}</span>
+      </div>
+    }
+  </div>
 </section>
 
-<section class="stats container">
-  @for (s of stats; track s.label; let i = $index) {
-    <div class="stat" [appReveal]="i * 120">
-      <strong
-        [appCountUp]="s.value"
-        [decimals]="s.decimals ?? 0"
-        [pad]="s.pad ?? 0"
-        [suffix]="s.suffix"
-      >{{ s.display ?? s.value + s.suffix }}</strong>
-      <span>{{ s.label }}</span>
-    </div>
-  }
-</section>
