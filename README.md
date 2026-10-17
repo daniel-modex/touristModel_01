@@ -16,7 +16,7 @@ npm run build      # production build → dist/kerala-travel
 
 | Section (top → bottom) | Component |
 |---|---|
-| Hero with looping Kerala video, nav, search pill, stat cards | `components/hero`, `components/header` |
+| Hero with Kerala video (plays once), nav, search pill, stat cards | `components/hero`, `components/header` |
 | "Kerala tourism" destination mosaic | `components/destinations` |
 | "One click for you" steps | `components/how-it-works` |
 | "Our tourist destination" packages | `components/packages` |
@@ -29,7 +29,7 @@ Content lives in `src/app/data/content.ts`.
 ## Animations / events (taken from the reference screen recording)
 
 - **Hero intro** – nav slides down, poster slowly zooms, headline → subtitle → search pill rise in with blur-to-sharp, stat cards pop up overlapping the hero edge.
-- **Hero video** – autoplaying muted loop that cross-fades in over the poster once it starts playing.
+- **Hero video** – muted autoplay that plays once and holds on its last frame (no loop); the headline and search pill rise in once it is under way.
 - **Stat counters** – count up when scrolled into view (`CountUpDirective`).
 - **Scroll reveal** – every section heading / card blurs-in, fades and rises, staggered (`RevealDirective`, IntersectionObserver; respects `prefers-reduced-motion`).
 - **How it works** – steps auto-highlight one after another on a white card (click to jump).
