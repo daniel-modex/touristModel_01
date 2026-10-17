@@ -1,5 +1,6 @@
 <section class="journeys" id="packages" aria-labelledby="journeys-title">
-  <div class="stage" appClipReveal>
+  <div class="pin">
+  <div class="stage">
     <div class="bgs" aria-hidden="true">
       @for (p of items; track p.id; let i = $index) {
         <img [src]="p.bg" alt="" class="bg" [class.on]="index() === i" loading="lazy" />
@@ -47,16 +48,18 @@
             class="tab"
             [id]="'journey-tab-' + i"
             [class.active]="index() === i"
+            [class.done]="i < index()"
             [attr.aria-selected]="index() === i"
             [attr.tabindex]="index() === i ? 0 : -1"
             (click)="select(i)"
           >
-            <span class="line"><span class="fill" [class.run]="index() === i && !reduced" (animationend)="next(i)"></span></span>
+            <span class="line"><span class="fill"></span></span>
             <span class="num">{{ pad(i) }}</span>
             <span class="name">{{ p.place }}</span>
           </button>
         }
       </div>
     </div>
+  </div>
   </div>
 </section>
