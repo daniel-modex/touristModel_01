@@ -46,5 +46,5 @@ All photos/video are from Wikimedia Commons – see [CREDITS.md](CREDITS.md) (al
 
 The UI follows Apple's Human Interface Guidelines and Liquid Glass (see [docs/design-review.md](docs/design-review.md)):
 glass only on the floating controls layer (nav, search, menu sheet), opaque content, 44 px targets, `rem` type,
-automatic light/dark, and Reduce Motion / Reduce Transparency / Increase Contrast fallbacks.
+light/dark that follows the system with an icon-only glass toggle (bottom right, choice saved), and Reduce Motion / Reduce Transparency / Increase Contrast fallbacks.
 Claude Code skills used for the review live in `.claude/skills/` (`apple-design`, `apple-design-motion`, `liquid-glass-ref`, `liquid-glass`).

@@ -1,0 +1,60 @@
+:host {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 60;
+}
+
+.toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  transition: transform 0.5s var(--spring);
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &:active {
+    transform: scale(0.92);
+    transition-duration: 0.12s;
+  }
+}
+
+.icon {
+  grid-area: 1 / 1;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* the outgoing icon spins and shrinks away, the incoming one springs in */
+  opacity: 0;
+  transform: rotate(-80deg) scale(0.4);
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.6s var(--spring);
+
+  &.show {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon,
+  .toggle {
+    transition: opacity 0.2s linear;
+  }
+
+  .icon {
+    transform: none;
+  }
+}

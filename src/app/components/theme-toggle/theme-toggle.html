@@ -1,0 +1,17 @@
+<button
+  type="button"
+  class="toggle glass"
+  [attr.aria-label]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+  [attr.aria-pressed]="theme() === 'dark'"
+  (click)="toggle()"
+>
+  <!-- sun: shown in dark mode (tap for light) -->
+  <svg class="icon sun" [class.show]="theme() === 'dark'" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" />
+    <path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7" />
+  </svg>
+  <!-- moon: shown in light mode (tap for dark) -->
+  <svg class="icon moon" [class.show]="theme() === 'light'" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.2 8.2 0 1 0 10.2 10.2z" />
+  </svg>
+</button>

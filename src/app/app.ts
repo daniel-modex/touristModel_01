@@ -8,10 +8,11 @@ import { Hero } from './components/hero/hero';
 import { HowItWorks } from './components/how-it-works/how-it-works';
 import { Packages } from './components/packages/packages';
 import { Testimonials } from './components/testimonials/testimonials';
+import { ThemeToggle } from './components/theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-root',
-  imports: [Header, Hero, Categories, Destinations, HowItWorks, Packages, Testimonials, Blog, Footer],
+  imports: [Header, Hero, Categories, Destinations, HowItWorks, Packages, Testimonials, Blog, Footer, ThemeToggle],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
