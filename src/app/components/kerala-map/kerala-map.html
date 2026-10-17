@@ -1,0 +1,103 @@
+<section class="map" id="destinations" aria-labelledby="map-title">
+  <div class="inner">
+    <div class="copy">
+      <span class="eyebrow" appReveal>Destinations</span>
+      <h2 id="map-title" class="title" appSplit>Kerala, mapped</h2>
+      <p class="lead" appSplit="0.15">
+        A thin green coast between the Arabian Sea and the Western Ghats. Pick a place to see where it sits and when it
+        shines.
+      </p>
+
+      <dl class="facts" appReveal="150">
+        @for (f of facts; track f.l) {
+          <div>
+            <dt>{{ f.n }}</dt>
+            <dd>{{ f.l }}</dd>
+          </div>
+        }
+      </dl>
+
+      <ul class="places" role="list" appReveal="250">
+        @for (p of pins; track p.id) {
+          <li>
+            <button
+              type="button"
+              class="place"
+              [class.active]="activeId() === p.id"
+              [attr.aria-pressed]="activeId() === p.id"
+              (mouseenter)="activate(p.id)"
+              (focus)="activate(p.id)"
+              (click)="activate(p.id)"
+            >
+              <img [src]="p.image" alt="" loading="lazy" width="56" height="56" />
+              <span class="txt">
+                <strong>{{ p.name }}</strong>
+                <small>{{ p.note }}</small>
+              </span>
+              <span class="season">
+                <small>Best time</small>
+                {{ p.season }}
+              </span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      <a class="btn-outline" href="#packages" appReveal="300">Explore Tours</a>
+    </div>
+
+    <div class="stage">
+      <div class="frame" [style.--ar]="vbW / vbH" [style.aspect-ratio]="vbW + ' / ' + vbH">
+        <svg [attr.viewBox]="viewBox" role="img" aria-label="Map of Kerala with featured destinations">
+          <!-- outer contour: districts stroked thick underneath, then filled on top -->
+          <g class="contour" aria-hidden="true">
+            @for (d of districts; track d.name) {
+              <path [attr.d]="d.d" />
+            }
+          </g>
+          <g class="land">
+            @for (d of districts; track d.name) {
+              <path class="district" [class.on]="d.name === active().district" [attr.d]="d.d">
+                <title>{{ d.name }}</title>
+              </path>
+            }
+          </g>
+
+          <text class="sea" x="26" y="700" transform="rotate(-90 26 700)">ARABIAN SEA</text>
+          <text class="ghats" x="610" y="360" transform="rotate(90 610 360)">WESTERN GHATS</text>
+
+          <g class="pins">
+            @for (p of pins; track p.id) {
+              <g
+                class="pin"
+                [class.active]="activeId() === p.id"
+                [attr.transform]="'translate(' + p.x + ' ' + p.y + ')'"
+                (mouseenter)="activate(p.id)"
+              >
+                <circle class="pulse" r="9" />
+                <circle class="halo" r="13" />
+                <circle class="dot" r="6.5" />
+                <title>{{ p.name }}</title>
+              </g>
+            }
+          </g>
+        </svg>
+
+        <!-- small label beside the active pin -->
+        <span class="chip glass" [style.left]="chip().left" [style.top]="chip().top" [style.transform]="chip().transform" [style.margin-left]="chip().marginLeft" aria-hidden="true">
+          {{ active().name }}
+        </span>
+
+        <!-- Liquid Glass detail card, parked in the empty sea so it never hides a pin -->
+        <div class="detail glass" aria-live="polite">
+          <img [src]="active().image" alt="" width="56" height="56" />
+          <div>
+            <strong>{{ active().name }}</strong>
+            <span>{{ active().district }} district</span>
+            <span class="best">Best: {{ active().season }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

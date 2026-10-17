@@ -16,10 +16,25 @@
   height: var(--header-h);
   padding: 0 clamp(20px, 3.5vw, 48px);
   color: #fff;
-  animation: nav-in 1.1s var(--ease) 0.2s both;
 
   &.over-content {
     color: var(--ink);
+  }
+
+  /* hidden until the loader lifts, then eases in; slides away while scrolling down, back on scroll up */
+  opacity: 0;
+  transform: translateY(-16px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.7s var(--ease);
+
+  &.ready {
+    opacity: 1;
+    transform: none;
+  }
+
+  &.ready.hide {
+    transform: translateY(-120%);
   }
 
   > * {
@@ -191,13 +206,6 @@
   }
 }
 
-@keyframes nav-in {
-  from {
-    opacity: 0;
-    transform: translateY(-16px);
-  }
-}
-
 @media (max-width: 900px) {
   .bar {
     padding: 0 16px;
@@ -248,7 +256,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bar,
+  .bar {
+    transition-duration: 0.01ms;
+  }
+
   .links.open {
     animation: none;
   }

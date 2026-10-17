@@ -1,0 +1,19 @@
+@if (!done()) {
+  <div #root class="loader" role="status" aria-live="polite">
+    <span class="sr-only">Loading Greenmiles</span>
+
+    <div class="sheet" aria-hidden="true">
+      <div class="noise"></div>
+      <div class="logo-wrap">
+        <!-- dim copy underneath -->
+        <div class="logo-mask">
+          <div class="logo-layer logo-back"><app-logo [mono]="true" [height]="76" /></div>
+        </div>
+        <!-- bright copy: its clip-path sweeps open as loading progresses -->
+        <div class="logo-mask front-mask">
+          <div class="logo-layer logo-front"><app-logo [mono]="true" [height]="76" /></div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

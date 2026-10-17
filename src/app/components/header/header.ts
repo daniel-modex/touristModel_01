@@ -1,5 +1,6 @@
-import { Component, HostListener, OnInit, signal } from '@angular/core';
+import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { NAV_LINKS } from '../../data/content';
+import { Motion } from '../../motion/motion.service';
 import { Logo } from '../logo/logo';
 
 /**
@@ -19,6 +20,10 @@ export class Header implements OnInit {
   protected readonly overContent = signal(false);
   protected readonly active = signal('');
   protected readonly menuOpen = signal(false);
+  /** hides while scrolling down, returns on scroll up (like the reference) */
+  protected readonly hidden = signal(false);
+  protected readonly motion = inject(Motion);
+  private lastY = 0;
 
   ngOnInit(): void {
     this.onScroll();
@@ -27,8 +32,14 @@ export class Header implements OnInit {
   @HostListener('window:scroll')
   @HostListener('window:resize')
   onScroll(): void {
-    const hero = document.getElementById('top');
-    this.overContent.set(!!hero && hero.getBoundingClientRect().bottom < 90);
+    // the hero + story form one sticky "intro"; the bar changes style only once that has scrolled away
+    const intro = document.getElementById('intro');
+    this.overContent.set(!!intro && intro.getBoundingClientRect().bottom < 90);
+
+    const y = window.scrollY;
+    if (y > 320 && y > this.lastY + 4 && !this.menuOpen()) this.hidden.set(true);
+    else if (y < this.lastY - 4 || y < 320) this.hidden.set(false);
+    this.lastY = y;
 
     let current = '';
     for (const l of this.links) {
@@ -46,9 +57,7 @@ export class Header implements OnInit {
   protected go(id: string, event: Event): void {
     event.preventDefault();
     this.menuOpen.set(false);
-    document.getElementById(id)?.scrollIntoView({
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-    });
+    this.motion.scrollTo(id === 'top' ? 0 : id);
   }
 
   protected setLang(l: 'ML' | 'EN'): void {

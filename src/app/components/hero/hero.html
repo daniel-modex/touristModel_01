@@ -12,11 +12,14 @@
       disablepictureinpicture
       disableremoteplayback
       preload="auto"
-      (timeupdate)="onTimeUpdate(heroVideo)"
+      (loadeddata)="motion.heroReady.set(true)"
       (ended)="onEnded()"
       (canplay)="tryPlay()"
     >
     </video>
+    <!-- scroll-driven: glass blur + scrim, invisible until the page scrolls -->
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="backdrop" aria-hidden="true"></div>
   </div>
 
   <div class="copy" [class.text-in]="textReady()">

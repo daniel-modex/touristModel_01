@@ -1,0 +1,373 @@
+:host {
+  display: block;
+  position: relative;
+  z-index: 2;
+  background: var(--sand);
+}
+
+.map {
+  padding: clamp(80px, 12vw, 160px) 0 clamp(72px, 10vw, 140px);
+  overflow: clip;
+}
+
+.inner {
+  width: min(1240px, 100% - 48px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 20px;
+}
+
+.lead {
+  max-width: 44ch;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  margin: 32px 0 36px;
+  padding: 20px 0;
+  border-block: 1px solid var(--line);
+  width: 100%;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  dt {
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+}
+
+.places {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.place {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  grid-template-areas:
+    'img txt'
+    'img season';
+  column-gap: 14px;
+  row-gap: 2px;
+  align-items: center;
+  text-align: left;
+  padding: 10px 14px 10px 10px;
+  min-height: 76px;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--line);
+  transition:
+    background 0.4s var(--ease),
+    box-shadow 0.4s var(--ease),
+    transform 0.5s var(--spring);
+
+  img {
+    grid-area: img;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  .txt {
+    grid-area: txt;
+    display: flex;
+    flex-direction: column;
+
+    strong {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+    }
+
+    small {
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+  }
+
+  .season {
+    grid-area: season;
+    font-size: 0.8125rem;
+    font-weight: 600;
+
+    small {
+      margin-right: 6px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    transition-duration: 0.12s;
+  }
+
+  &.active {
+    background: var(--card);
+    box-shadow:
+      inset 0 0 0 1.5px var(--accent),
+      0 14px 30px rgb(var(--shadow) / 0.1);
+  }
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+  transition:
+    background 0.4s var(--ease),
+    color 0.4s var(--ease),
+    transform 0.5s var(--spring);
+
+  &:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  &:active {
+    transform: scale(0.96);
+    transition-duration: 0.12s;
+  }
+}
+
+/* ---------------- map ---------------- */
+.stage {
+  position: sticky;
+  top: 12vh;
+}
+
+.frame {
+  position: relative;
+  /* width follows the viewport height so the box always matches the drawing's aspect ratio */
+  width: min(100%, 520px, calc(84svh * var(--ar, 0.59)));
+  margin-inline: auto;
+  will-change: transform, opacity;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.contour path {
+  fill: var(--map-line);
+  stroke: var(--map-line);
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+
+.district {
+  fill: var(--map-fill);
+  stroke: var(--map-line);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  transition: fill 0.5s var(--ease);
+
+  &.on {
+    fill: color-mix(in srgb, var(--accent) 26%, var(--map-fill));
+  }
+}
+
+.sea,
+.ghats {
+  font-size: 15px;
+  letter-spacing: 0.32em;
+  fill: var(--muted);
+  opacity: 0.75;
+  text-anchor: middle;
+}
+
+.pin {
+  cursor: pointer;
+
+  .dot {
+    fill: var(--card);
+    stroke: var(--ink);
+    stroke-width: 2.5;
+    transition: fill 0.3s, stroke 0.3s;
+  }
+
+  .halo {
+    fill: none;
+    stroke: var(--ink);
+    stroke-opacity: 0.18;
+    stroke-width: 1.5;
+  }
+
+  .pulse {
+    fill: var(--accent);
+    opacity: 0;
+  }
+
+  &.active {
+    .dot {
+      fill: var(--accent);
+      stroke: var(--card);
+    }
+
+    .halo {
+      stroke: var(--accent);
+      stroke-opacity: 0.8;
+    }
+
+    .pulse {
+      animation: pulse 2s var(--ease) infinite;
+    }
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.45;
+    r: 9px;
+  }
+  to {
+    opacity: 0;
+    r: 30px;
+  }
+}
+
+.chip {
+  position: absolute;
+  z-index: 3;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  transition:
+    left 0.55s var(--ease),
+    top 0.55s var(--ease),
+    margin-left 0.55s var(--ease),
+    transform 0.55s var(--ease);
+}
+
+.detail {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: 4%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: 46%;
+  padding: 10px 16px 10px 10px;
+  border-radius: 18px;
+  pointer-events: none;
+
+  img {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  strong {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 0.8125rem;
+    opacity: 0.8;
+    white-space: nowrap;
+  }
+
+  .best {
+    font-weight: 600;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 980px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .stage {
+    position: static;
+    order: -1;
+  }
+
+  .frame {
+    width: min(100%, 420px);
+  }
+
+  .places {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin.active .pulse {
+    animation: none;
+  }
+
+  .chip,
+  .district {
+    transition-duration: 0.01ms;
+  }
+}

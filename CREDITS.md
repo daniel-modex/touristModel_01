@@ -38,3 +38,15 @@ All media is sourced from Wikimedia Commons under the licenses below (resized/cr
 | `images/cat-vattathani.jpg` | [Misty paddy field at Vattathani, Palakkad.jpg](https://commons.wikimedia.org/wiki/File:Misty_paddy_field_at_Vattathani%2C_Palakkad.jpg) | Navaneethpp | CC BY-SA 4.0 |
 | `images/cat-theyyam.jpg` | [Theyyam of Kerala 3.jpg](https://commons.wikimedia.org/wiki/File:Theyyam_of_Kerala_3.jpg) | Shagil Kannur | CC BY-SA 4.0 |
 | `images/cat-elephant.jpg` | [Elephant getting ready for safari in Kumily, thekady 6018.JPG](https://commons.wikimedia.org/wiki/File:Elephant_getting_ready_for_safari_in_Kumily%2C_thekady_6018.JPG) | Rameshng | CC BY-SA 3.0 |
+| `images/journey-athirappilly.jpg` | [Athirappilly Falls 2024.jpg](https://commons.wikimedia.org/wiki/File:Athirappilly_Falls_2024.jpg) | Vis M | CC0 |
+| `images/journey-alleppey.jpg` | [Houseboat on Punnamada Backwaters -Kerala.jpg](https://commons.wikimedia.org/wiki/File:Houseboat_on_Punnamada_Backwaters_-Kerala.jpg) | Varghesepunnamada | CC BY 4.0 |
+
+## Map data
+
+Kerala district boundaries (`data-src/kerala-districts.geojson`, used to generate the map in the "Kerala, mapped" section):
+[udit-001/india-maps-data](https://github.com/udit-001/india-maps-data), based on Census of India 2011 boundaries.
+The repository does not state a licence; confirm terms before commercial use.
+
+## Libraries
+
+GSAP (ScrollTrigger, SplitText) under the GSAP standard no-charge licence, Lenis (MIT).

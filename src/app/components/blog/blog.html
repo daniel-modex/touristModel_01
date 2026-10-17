@@ -1,13 +1,13 @@
 <section class="container sec" id="blog">
-  <div class="head" appReveal>
-    <span class="eyebrow">Our Blog</span>
-    <h2 class="section-title">Our travel memories</h2>
+  <div class="head">
+    <span class="eyebrow" appReveal>Our Blog</span>
+    <h2 class="section-title" appSplit>Our travel memories</h2>
   </div>
 
   <div class="grid">
     @for (p of posts; track p.title; let i = $index) {
       <a href="#blog" class="post" [appReveal]="i * 140">
-        <div class="img"><img [src]="p.image" alt="" loading="lazy" /></div>
+        <div class="img" appParallax="9"><img [src]="p.image" alt="" loading="lazy" /></div>
         <div class="body">
           <small>{{ p.date }}</small>
           <h3>{{ p.title }}</h3>

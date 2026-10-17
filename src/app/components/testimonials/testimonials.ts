@@ -1,10 +1,11 @@
 import { Component, computed, signal } from '@angular/core';
 import { TESTIMONIALS } from '../../data/content';
 import { RevealDirective } from '../../directives/reveal.directive';
+import { SplitDirective } from '../../directives/split.directive';
 
 @Component({
   selector: 'app-testimonials',
-  imports: [RevealDirective],
+  imports: [RevealDirective, SplitDirective],
   templateUrl: './testimonials.html',
   styleUrl: './testimonials.scss',
 })

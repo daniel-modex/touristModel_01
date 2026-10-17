@@ -1,0 +1,63 @@
+:host {
+  display: contents;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: all;
+}
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 80% at 50% 110%, rgb(0 139 210 / 0.28), transparent 60%),
+    linear-gradient(0deg, #043148, #06202f 85%);
+  border-radius: 0 0 clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px);
+  will-change: transform;
+}
+
+/* film grain, like the reference's loader-noise layer */
+.noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.logo-wrap {
+  position: relative;
+  color: #fff;
+  display: grid;
+  will-change: transform, opacity;
+}
+
+.logo-mask {
+  grid-area: 1 / 1;
+  overflow: hidden; /* each layer slides up out of its own mask */
+}
+
+.logo-layer {
+  line-height: 0;
+}
+
+.logo-back {
+  opacity: 0.38;
+}
+
+.front-mask {
+  position: relative;
+}
+
+@media (max-width: 600px) {
+  .logo-wrap {
+    transform-origin: center;
+    scale: 0.74;
+  }
+}

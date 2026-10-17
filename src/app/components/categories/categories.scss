@@ -1,5 +1,15 @@
+:host {
+  /* slides over the end of the intro with a soft rounded edge */
+  display: block;
+  position: relative;
+  z-index: 2;
+  margin-top: -36px;
+  background: var(--bg);
+  border-radius: 36px 36px 0 0;
+}
+
 .cats {
-  padding: 80px 0 8px;
+  padding: 96px 0 8px;
 }
 
 .cats-title {

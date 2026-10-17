@@ -1,4 +1,23 @@
 <footer class="foot" id="contact">
+  <div class="container cta">
+    <span class="eyebrow" appReveal>Ready when you are</span>
+    <h2 appSplit>Embark on your<br />Kerala journey</h2>
+    <a class="plan" href="#packages" appReveal="200">Plan My Trip</a>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      @for (round of [0, 1]; track round) {
+        <div class="group">
+          @for (n of marquee; track n) {
+            <span>{{ n }}</span>
+            <i></i>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
   <div class="container brand-row" appReveal>
     <app-logo [height]="48" />
     <p>Kerala journeys, planned the green way.</p>

@@ -16,11 +16,13 @@ npm run build      # production build → dist/greenmiles
 
 | Section (top → bottom) | Component |
 |---|---|
-| Hero with Kerala video (plays once), nav, search pill, stat cards | `components/hero`, `components/header` |
+| Page-load loader (logo sweep) | `components/loader` |
+| Hero (sticky, blurs on scroll) + story (photo stack + statements) as one scene | `components/intro`, `components/hero`, `components/story` |
+| Floating glass header | `components/header` |
 | "Top categories" icon tabs + category results (10 categories × 3 places) | `components/categories`, data in `data/categories.ts` |
-| "Kerala tourism" destination mosaic | `components/destinations` |
+| "Kerala, mapped": real district map, pins at true coordinates | `components/kerala-map`, data in `data/kerala-map.ts` |
 | "One click for you" steps | `components/how-it-works` |
-| "Our tourist destination" packages | `components/packages` |
+| "Signature journeys": immersive tabbed packages (₹) | `components/journeys` |
 | Testimonial carousel | `components/testimonials` |
 | "Our travel memories" blog | `components/blog` |
 | Footer + newsletter | `components/footer` |
@@ -66,3 +68,13 @@ The Greenmiles logo comes from `brand/source/greenmiles_logo_6.pdf` (outlined ve
 
 Regenerate with `npm run brand` (SVGs, manifest, Angular data) or `npm run brand:png` (also PNG/ICO/og-image;
 needs Playwright with Chromium and ImageMagick; set `PLAYWRIGHT_PATH` / `CHROMIUM_PATH` if they are not on the default path).
+
+## Motion
+
+Smooth scrolling and scroll-driven animation use **Lenis** + **GSAP** (ScrollTrigger, SplitText), the same stack as the
+reference site that inspired them; see [docs/kudanil-analysis.md](docs/kudanil-analysis.md) for the study and how each
+technique was adapted. Shared code: `src/app/motion/motion.service.ts` (engine, scroll lock, smooth `scrollTo`) and the
+directives `appSplit`, `appParallax`, `appClipReveal` in `src/app/directives`. Everything honours **Reduce Motion**.
+GSAP is used under its [standard "no charge" licence](https://gsap.com/standard-license); Lenis is MIT.
+
+`npm run map` regenerates the Kerala map data from `data-src/kerala-districts.geojson`.

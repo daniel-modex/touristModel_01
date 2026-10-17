@@ -15,6 +15,9 @@
   --shadow: 20 19 19;
   --footer-bg: #1b1918;
   --accent: #2f7d5b;
+  --sand: #f3eee5; /* warm section background (map) */
+  --map-fill: #e6dfd0;
+  --map-line: #cfc6b2;
 
   /* Liquid Glass (functional layer only: nav, search, sheets) */
   --glass-fill: rgb(255 255 255 / 0.72);
@@ -46,6 +49,9 @@
   --shadow: 0 0 0;
   --footer-bg: #1a1a1d;
   --accent: #5bbd92;
+  --sand: #101214;
+  --map-fill: #1d2125;
+  --map-line: #343a40;
 
   --glass-fill: rgb(40 40 44 / 0.62);
   --glass-edge: rgb(255 255 255 / 0.18);
@@ -318,4 +324,46 @@ p {
     transform: none;
     transition: opacity 0.25s linear;
   }
+}
+
+/* ------------------------------------------------------------------ *
+ * Lenis smooth scroll (recommended base rules) + loader scroll lock
+ * ------------------------------------------------------------------ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+html.scroll-locked,
+html.scroll-locked body {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ *
+ * Scroll-effect helpers (see src/app/directives)
+ * ------------------------------------------------------------------ */
+.split-pending {
+  visibility: hidden;
+}
+
+.parallax-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-frame.parallax-on > img {
+  position: absolute;
+  inset: -10% 0 auto 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  will-change: transform;
 }

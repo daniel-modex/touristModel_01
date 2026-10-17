@@ -82,7 +82,7 @@
 blockquote {
   position: relative;
   margin: 0;
-  min-height: 130px;
+  min-height: 200px;
 }
 
 .quote {
@@ -97,11 +97,10 @@ blockquote {
 
 .text {
   position: relative;
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  letter-spacing: 0;
-  color: var(--muted);
-  animation: swap 0.7s var(--ease) both;
+  font-size: clamp(1.25rem, 2.1vw, 1.75rem);
+  line-height: 1.45;
+  letter-spacing: -0.012em;
+  color: var(--ink);
 }
 
 @keyframes swap {

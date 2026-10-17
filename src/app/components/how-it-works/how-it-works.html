@@ -1,5 +1,5 @@
 <section class="container how" id="how" (mouseenter)="pause()" (mouseleave)="resume()" (focusin)="pause()" (focusout)="resume()">
-  <div class="visual" appReveal>
+  <div class="visual" appReveal appParallax="7">
     <img src="images/how-it-works.jpg" alt="Cliffs and sea at Varkala, Kerala" loading="lazy" />
     <div class="shade"></div>
     <a class="cta glass glass--clear" href="#packages">Plan Your Trip <span aria-hidden="true">→</span></a>
@@ -9,7 +9,7 @@
   <div class="steps">
     <div appReveal="100">
       <span class="eyebrow">How it works</span>
-      <h2 class="section-title">One click for you</h2>
+      <h2 class="section-title" appSplit>One click for you</h2>
     </div>
 
     <ul>

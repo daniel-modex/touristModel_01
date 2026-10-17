@@ -1,0 +1,25 @@
+<section class="story" aria-labelledby="story-title">
+  <h2 id="story-title" class="sr-only">Why Kerala</h2>
+  <div class="stage">
+    <ul class="cards" aria-hidden="true">
+      @for (c of cards; track c.src; let i = $index) {
+        <li
+          class="card"
+          [attr.data-r]="c.r"
+          [style.--l]="c.l" [style.--t]="c.t" [style.--w]="c.w"
+          [style.--ml]="c.ml" [style.--mt]="c.mt" [style.--mw]="c.mw"
+          [style.--ratio]="c.ratio"
+          [style.z-index]="i"
+        >
+          <img [src]="c.src" alt="" loading="lazy" />
+        </li>
+      }
+    </ul>
+
+    <div class="lines">
+      @for (l of lines; track l) {
+        <p class="line">{{ l }}</p>
+      }
+    </div>
+  </div>
+</section>

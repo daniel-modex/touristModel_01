@@ -1,0 +1,62 @@
+<section class="journeys" id="packages" aria-labelledby="journeys-title">
+  <div class="stage" appClipReveal>
+    <div class="bgs" aria-hidden="true">
+      @for (p of items; track p.id; let i = $index) {
+        <img [src]="p.bg" alt="" class="bg" [class.on]="index() === i" loading="lazy" />
+      }
+      <div class="shade"></div>
+    </div>
+
+    <div class="inner">
+      <header class="head">
+        <span class="eyebrow" appReveal>Signature journeys</span>
+        <h2 id="journeys-title" class="title" appSplit>Three ways to fall for Kerala</h2>
+      </header>
+
+      <div class="body">
+        @for (p of [current()]; track p.id) {
+          <div class="info">
+            <div class="meta">
+              <span class="chip">{{ p.days }}</span>
+              <span class="chip" [attr.aria-label]="'Rated ' + p.rating.toFixed(1) + ' out of 5'"><i aria-hidden="true">★</i> {{ p.rating.toFixed(1) }}</span>
+              <span class="dates">{{ p.dates }}</span>
+            </div>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.blurb }}</p>
+            <ul class="highlights" role="list">
+              @for (h of p.highlights; track h) {
+                <li>{{ h }}</li>
+              }
+            </ul>
+          </div>
+
+          <aside class="book glass glass--clear" aria-label="Booking">
+            <span class="from">From</span>
+            <strong class="price" [attr.aria-label]="p.price.toLocaleString('en-IN') + ' rupees per person'">₹{{ p.price.toLocaleString('en-IN') }}</strong>
+            <span class="per">per person</span>
+            <a class="cta" href="#contact">Plan This Journey</a>
+          </aside>
+        }
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Signature journeys" (keydown)="onKey($event)">
+        @for (p of items; track p.id; let i = $index) {
+          <button
+            type="button"
+            role="tab"
+            class="tab"
+            [id]="'journey-tab-' + i"
+            [class.active]="index() === i"
+            [attr.aria-selected]="index() === i"
+            [attr.tabindex]="index() === i ? 0 : -1"
+            (click)="select(i)"
+          >
+            <span class="line"><span class="fill" [class.run]="index() === i && !reduced" (animationend)="next(i)"></span></span>
+            <span class="num">{{ pad(i) }}</span>
+            <span class="name">{{ p.place }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</section>

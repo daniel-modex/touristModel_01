@@ -6,13 +6,19 @@ export interface Destination {
 }
 
 export interface TourPackage {
+  id: string;
   days: string;
   rating: number;
   dates: string;
   title: string;
-  /** price in Indian rupees (INR) */
+  /** place name used on the tab */
+  place: string;
+  /** price per person in Indian rupees (INR) */
   price: number;
-  image: string;
+  /** full-bleed background */
+  bg: string;
+  blurb: string;
+  highlights: string[];
 }
 
 export interface Step {
@@ -86,9 +92,45 @@ export const STEPS: Step[] = [
 ];
 
 export const PACKAGES: TourPackage[] = [
-  { days: '7 Days', rating: 4.9, dates: '22 AUGUST - 29 AUGUST', title: 'Munnar Tour Package', price: 23999, image: 'images/pkg-munnar.jpg' },
-  { days: '5 Days', rating: 4.8, dates: '22 AUGUST - 27 AUGUST', title: 'Athirappilly Tour Package', price: 17999, image: 'images/pkg-athirappilly.jpg' },
-  { days: '3 Days', rating: 4.8, dates: '23 AUGUST - 25 AUGUST', title: 'Alleppey Tour Package', price: 13499, image: 'images/pkg-backwaters.jpg' },
+  {
+    id: 'munnar',
+    days: '7 Days',
+    rating: 4.9,
+    dates: '22 Aug – 29 Aug',
+    title: 'Munnar Tour Package',
+    place: 'Munnar',
+    price: 23999,
+    bg: 'images/munnar.jpg',
+    blurb:
+      'Seven slow days in tea country: a sunrise above the clouds at Kolukkumalai, a walk with the Nilgiri tahr at Eravikulam, and mornings that smell of fresh-picked leaves.',
+    highlights: ['Kolukkumalai sunrise', 'Eravikulam National Park', 'Tea estate walk', 'Mattupetty lake'],
+  },
+  {
+    id: 'athirappilly',
+    days: '5 Days',
+    rating: 4.8,
+    dates: '22 Aug – 27 Aug',
+    title: 'Athirappilly Tour Package',
+    place: 'Athirappilly',
+    price: 17999,
+    bg: 'images/journey-athirappilly.jpg',
+    blurb:
+      'Five days chasing water through the forest: the thundering Athirappilly Falls, the quieter Vazhachal gorge, and green trails along the Chalakudy river.',
+    highlights: ['Athirappilly Falls', 'Vazhachal Falls', 'Chalakudy river', 'Forest trails'],
+  },
+  {
+    id: 'alleppey',
+    days: '3 Days',
+    rating: 4.8,
+    dates: '23 Aug – 25 Aug',
+    title: 'Alleppey Tour Package',
+    place: 'Alleppey',
+    price: 13499,
+    bg: 'images/journey-alleppey.jpg',
+    blurb:
+      'Three days drifting through the backwaters: a night on a houseboat across Vembanad Lake, village canals lined with coconut palms, and dinner cooked on board.',
+    highlights: ['Houseboat night', 'Vembanad Lake', 'Kuttanad canals', 'Village canoe ride'],
+  },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
