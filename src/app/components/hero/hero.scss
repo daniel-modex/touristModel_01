@@ -35,7 +35,9 @@
 
   .video {
     opacity: 0;
-    transition: opacity 2s ease;
+    /* Short on purpose: a long crossfade blends the moving video with the static
+       poster behind it and shows up as blur / ghosting trails. */
+    transition: opacity 0.25s linear;
 
     &.ready {
       opacity: 1;
