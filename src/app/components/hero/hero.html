@@ -1,30 +1,32 @@
 <section class="hero" id="top">
   <div class="media">
-    <img class="poster" src="images/hero-poster.jpg" alt="" />
     <video
+      #heroVideo
       class="video"
       [class.ready]="videoReady()"
+      src="video/Video%20Project.mp4"
       autoplay
       muted
       loop
       playsinline
       preload="auto"
-      poster="images/hero-poster.jpg"
+      (loadeddata)="videoReady.set(true)"
       (playing)="videoReady.set(true)"
+      (timeupdate)="onTimeUpdate(heroVideo)"
     >
-      <source src="video/kerala-hero.webm" type="video/webm" />
-      <source src="video/kerala-hero.mp4" type="video/mp4" />
+      <source src="video/Video%20Project.mp4" type="video/mp4" />
+      <source src="video/Video Project.mp4" type="video/mp4" />
     </video>
     <div class="shade"></div>
   </div>
 
   <app-header />
 
-  <div class="copy">
+  <div class="copy" [class.text-in]="textReady()">
     <h1>Extraordinary natural and<br />cultural charm</h1>
     <p>Exploring Kerala is an unforgettable adventure.</p>
 
-    <form class="search" (ngSubmit)="search()" #f="ngForm">
+    <form class="search" [class.text-in]="textReady()" (ngSubmit)="search()" #f="ngForm">
       <label class="field">
         <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
         <input type="date" name="date" [(ngModel)]="date" aria-label="Date" />

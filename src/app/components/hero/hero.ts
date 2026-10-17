@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { STATS } from '../../data/content';
 import { CountUpDirective } from '../../directives/count-up.directive';
@@ -11,14 +11,30 @@ import { Header } from '../header/header';
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
-export class Hero {
+export class Hero implements OnInit {
   protected readonly stats = STATS;
   protected readonly videoReady = signal(false);
+  protected readonly textReady = signal(false);
   protected date = '';
   protected budget = '';
   protected guests = '';
   protected readonly budgets = ['Under ₹20,000', '₹20,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000+'];
   protected readonly guestOptions = ['1 Guest', '2 Guests', '3 – 5 Guests', '6+ Guests'];
+
+  ngOnInit(): void {
+    // Safety fallback so text still appears if video autoplay is blocked
+    setTimeout(() => {
+      if (!this.textReady()) {
+        this.textReady.set(true);
+      }
+    }, 5000);
+  }
+
+  protected onTimeUpdate(video: HTMLVideoElement): void {
+    if (video.currentTime >= 4 && !this.textReady()) {
+      this.textReady.set(true);
+    }
+  }
 
   protected search(): void {
     document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' });
