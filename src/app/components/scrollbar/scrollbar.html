@@ -1,0 +1,21 @@
+<nav class="sb" [class.on]="motion.introStarted()" [class.drag]="dragging()" aria-label="Page sections">
+  <div #rail class="rail" (pointerdown)="onRailDown($event)">
+    <ol class="marks">
+      @for (m of marks(); track m.id; let i = $index) {
+        <li class="mark" [class.passed]="i <= activeIndex()" [class.current]="i === activeIndex()" [style.--f]="m.f">
+          <button type="button" class="dot" [attr.aria-label]="m.label" [attr.aria-current]="i === activeIndex() ? 'location' : null" (click)="go(m.id)"></button>
+          <span class="tag glass" aria-hidden="true">{{ m.label }}</span>
+        </li>
+      }
+    </ol>
+    <div
+      #thumb
+      class="thumb"
+      aria-hidden="true"
+      (pointerdown)="onThumbDown($event)"
+      (pointermove)="onThumbMove($event)"
+      (pointerup)="onThumbUp()"
+      (pointercancel)="onThumbUp()"
+    ></div>
+  </div>
+</nav>

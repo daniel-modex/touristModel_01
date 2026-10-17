@@ -95,6 +95,12 @@ export class Motion {
     }
   }
 
+  /** Jump (no easing) to a pixel position: used while dragging a custom scrollbar. */
+  scrollNow(y: number): void {
+    if (this.lenis) this.lenis.scrollTo(y, { immediate: true, force: true });
+    else window.scrollTo(0, y);
+  }
+
   refresh(): void {
     ScrollTrigger.refresh();
   }

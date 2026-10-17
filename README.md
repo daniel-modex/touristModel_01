@@ -69,6 +69,12 @@ The Greenmiles logo comes from `brand/source/greenmiles_logo_6.pdf` (outlined ve
 Regenerate with `npm run brand` (SVGs, manifest, Angular data) or `npm run brand:png` (also PNG/ICO/og-image;
 needs Playwright with Chromium and ImageMagick; set `PLAYWRIGHT_PATH` / `CHROMIUM_PATH` if they are not on the default path).
 
+## Scrollbar
+
+The browser's scrollbar is hidden and replaced by `src/app/components/scrollbar`: a slim glass rail with a draggable pill and a
+checkpoint for each section (hover / focus for its name, click or Enter to glide there, click the rail to jump). Native wheel, touch
+and keyboard scrolling are untouched.
+
 ## Motion
 
 Smooth scrolling and scroll-driven animation use **Lenis** + **GSAP** (ScrollTrigger, SplitText), the same stack as the

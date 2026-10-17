@@ -94,6 +94,8 @@
 }
 
 html {
+  /* the browser's own scrollbar is hidden: <app-scrollbar> draws a slimmer one (scrolling itself is untouched) */
+  scrollbar-width: none;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 8px);
   -webkit-text-size-adjust: 100%;
@@ -357,4 +359,11 @@ html.lenis {
   height: 120%;
   object-fit: cover;
   will-change: transform;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }

@@ -10,11 +10,12 @@ import { KeralaMap } from './components/kerala-map/kerala-map';
 import { Loader } from './components/loader/loader';
 import { HowItWorks } from './components/how-it-works/how-it-works';
 import { Testimonials } from './components/testimonials/testimonials';
+import { Scrollbar } from './components/scrollbar/scrollbar';
 import { ThemeToggle } from './components/theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-root',
-  imports: [Loader, Header, Intro, Categories, KeralaMap, HowItWorks, Journeys, Testimonials, Blog, Footer, ThemeToggle],
+  imports: [Loader, Header, Intro, Categories, KeralaMap, HowItWorks, Journeys, Testimonials, Blog, Footer, ThemeToggle, Scrollbar],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
