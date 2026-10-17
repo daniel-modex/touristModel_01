@@ -9,7 +9,8 @@
     "test": "ng test",
     "brand": "node scripts/build-brand.mjs",
     "brand:png": "node scripts/build-brand.mjs --png",
-    "map": "node scripts/build-kerala-map.mjs"
+    "map": "node scripts/build-kerala-map.mjs",
+    "build:gh": "ng build --base-href /touristModel_01/"
   },
   "private": true,
   "packageManager": "npm@10.9.4",
