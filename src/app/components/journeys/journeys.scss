@@ -255,6 +255,7 @@
       height: 100%;
       width: 0;
       background: #fff;
+      transform-origin: left;
     }
   }
 
@@ -278,16 +279,12 @@
   }
 }
 
-/* scroll-linked: finished journeys are full, the active one fills with its share of the scroll */
-.tab.done .fill {
-  width: 100%;
+/* the current journey's bar is solid white, the others stay dim; it moves on as you scroll to the next one */
+.tab .line .fill {
+  transition: width 0.7s var(--ease);
 }
 
-.tab.active .fill {
-  width: calc(var(--seg, 0) * 100%);
-}
-
-:host(.static) .tab.active .fill {
+.tab.active .line .fill {
   width: 100%;
 }
 

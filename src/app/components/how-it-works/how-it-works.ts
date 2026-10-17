@@ -1,12 +1,11 @@
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { STEPS } from '../../data/content';
-import { ParallaxDirective } from '../../directives/parallax.directive';
 import { RevealDirective } from '../../directives/reveal.directive';
 import { SplitDirective } from '../../directives/split.directive';
 
 @Component({
   selector: 'app-how-it-works',
-  imports: [RevealDirective, ParallaxDirective, SplitDirective],
+  imports: [RevealDirective, SplitDirective],
   templateUrl: './how-it-works.html',
   styleUrl: './how-it-works.scss',
 })

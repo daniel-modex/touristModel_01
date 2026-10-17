@@ -8,7 +8,7 @@ All media is sourced from Wikimedia Commons under the licenses below (resized/cr
 | `images/kovalam.jpg` | [Kovalam Beach, Lighthouse.jpg](https://commons.wikimedia.org/wiki/File:Kovalam_Beach%2C_Lighthouse.jpg) | Honeybee44 | CC BY-SA 4.0 |
 | `images/varkala.jpg` | [Varkala cliff 06.jpg](https://commons.wikimedia.org/wiki/File:Varkala_cliff_06.jpg) | Ganesh Mohan T | CC BY-SA 4.0 |
 | `images/kochi.jpg` | [Chinese Fishing Nets - 3.jpg](https://commons.wikimedia.org/wiki/File:Chinese_Fishing_Nets_-_3.jpg) | Ingo Mehling | CC BY-SA 4.0 |
-| `images/how-it-works.jpg` | [Varkala cliff 07.jpg](https://commons.wikimedia.org/wiki/File:Varkala_cliff_07.jpg) | Ganesh Mohan T | CC BY-SA 4.0 |
+| `images/explorer.jpg` | Supplied by the project owner (source and licence not recorded in this repo) | - | - |
 | `images/pkg-munnar.jpg` | [Munnar Plantation hills.jpg](https://commons.wikimedia.org/wiki/File:Munnar_Plantation_hills.jpg) | Antonio Sinoy | CC0 |
 | `images/pkg-athirappilly.jpg` | [Natural waterfall cascading through forest canopy in Kerala.jpg](https://commons.wikimedia.org/wiki/File:Natural_waterfall_cascading_through_forest_canopy_in_Kerala.jpg) | LiteraryDP | CC BY-SA 4.0 |
 | `images/pkg-backwaters.jpg` | [Kerala backwaters, Palm trees, India.jpg](https://commons.wikimedia.org/wiki/File:Kerala_backwaters%2C_Palm_trees%2C_India.jpg) | Vyacheslav Argenberg | CC BY 4.0 |

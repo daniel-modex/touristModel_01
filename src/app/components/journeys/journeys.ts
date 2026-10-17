@@ -8,7 +8,7 @@ import { SplitDirective } from '../../directives/split.directive';
  * "Signature journeys": the reference's tabbed feature section (Cabins / Dining / Activities)
  * reimagined for tour packages. The section is a tall scroll track with a sticky Liquid Glass stage:
  * scrolling through it moves from one journey to the next (background cross-fades, the card and
- * booking panel swap), and each tab's progress line shows how far through its stretch you are.
+ * booking panel swap), and the active tab's line is lit white.
  * Tabs and arrow keys scroll to a journey, so mouse, keyboard and scroll stay in step. The frame
  * opens like a curtain as the section arrives.
  */
@@ -59,7 +59,7 @@ export class Journeys implements AfterViewInit, OnDestroy {
       },
     );
 
-    // scroll position -> active journey + progress through its stretch (written straight to a CSS variable)
+    // scroll position -> active journey
     const st = ScrollTrigger.create({
       trigger: track,
       start: 'top top',
@@ -67,7 +67,6 @@ export class Journeys implements AfterViewInit, OnDestroy {
       onUpdate: (self) => {
         const p = Math.min(0.9999, Math.max(0, self.progress)) * n;
         const i = Math.floor(p);
-        stage.style.setProperty('--seg', (p - i).toFixed(4));
         if (i !== this.index()) this.zone.run(() => this.index.set(i));
       },
     });

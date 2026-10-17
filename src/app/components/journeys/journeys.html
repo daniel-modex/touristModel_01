@@ -48,7 +48,6 @@
             class="tab"
             [id]="'journey-tab-' + i"
             [class.active]="index() === i"
-            [class.done]="i < index()"
             [attr.aria-selected]="index() === i"
             [attr.tabindex]="index() === i ? 0 : -1"
             (click)="select(i)"
